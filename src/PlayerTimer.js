@@ -2,11 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 const PlayerTimer = ({currentTrack}) => {
-	return (
-		<div>
-			{currentTrack && <div>Player Timer! {currentTrack.duration}</div>}
-		</div>
-	);
+	return <div>{currentTrack && <div>TIME STAMP!</div>}</div>;
 };
 
 const mapStateToProps = state => ({

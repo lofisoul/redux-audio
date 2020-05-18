@@ -3,7 +3,7 @@ export const FETCH_USER = 'FETCH_USER';
 export const START_LOADING_TRACKS = 'START_LOADING_TRACKS';
 export const FETCH_TRACKS = 'FETCH_TRACKS';
 export const STORE_PLAYLIST = 'STORE_PLAYLIST';
-export const SET_DEFAULT_CURRENT_TRACK = 'SET_DEFAULT_CURRENT_TRACK';
+export const SET_INITIAL_TRACK = 'SET_INITIAL_TRACK';
 export const SET_CURRENT_TRACK = 'SET_CURRENT_TRACK';
 export const PLAY_TRACK = 'PLAY_TRACK';
 export const SET_NEXT_TRACK = 'SET_NEXT_TRACK';
@@ -34,15 +34,10 @@ const storeUser = user => ({
 //playlist config
 export const fetchTracks = username => (dispatch, getState, api) => {
 	dispatch(loadTracks());
-	api.createPlaylist(username)
-		.then(playlist => {
-			dispatch(storeTracks(playlist));
-			return playlist;
-		})
-		.then(playlist => {
-			console.log(playlist);
-			dispatch(setDefaultTrack(playlist));
-		});
+	api.createPlaylist(username).then(playlist => {
+		dispatch(storeTracks(playlist));
+		return playlist;
+	});
 };
 
 const loadTracks = () => ({
@@ -61,9 +56,10 @@ const storeTracks = playlist => ({
 // 	});
 // };
 
-export const setDefaultTrack = playlist => ({
-	type: SET_DEFAULT_CURRENT_TRACK,
-	currentTrack: playlist[0],
+export const setInitialTrack = (track, currentIndex) => ({
+	type: SET_INITIAL_TRACK,
+	track,
+	currentIndex,
 });
 
 export const setCurrentTrack = (track, currentIndex) => ({

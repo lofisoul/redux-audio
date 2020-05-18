@@ -1,12 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setCurrentTrack, playTrackOnClick} from './store/actions';
+import {
+	setCurrentTrack,
+	playTrackOnClick,
+	setInitialTrack,
+} from './store/actions';
 import StyledTrack from './styled/StyledTrack';
 
 const Track = ({
 	track,
 	index,
 	currentTrack,
+	setInitialTrack,
 	setCurrentTrack,
 	playlist,
 	playStatus,
@@ -15,10 +20,18 @@ const Track = ({
 }) => {
 	const clickPlay = e => {
 		const id = +e.currentTarget.parentNode.dataset.id;
-		const currentTrack = playlist.filter(track => track.id === id);
-		const currentIndex = playlist.map(track => track.id).indexOf(id);
-		setCurrentTrack(currentTrack[0].track, currentIndex);
-		playTrackOnClick();
+		const newCurrentTrack = playlist.filter(track => track.id === id);
+		const newCurrentIndex = playlist.map(track => track.id).indexOf(id);
+		if (!currentTrack) {
+			setInitialTrack(newCurrentTrack[0].track, newCurrentIndex);
+			return;
+		}
+		if (currentTrack && id === currentTrack.id) {
+			console.log(playStatus);
+			playTrackOnClick();
+		} else {
+			setCurrentTrack(newCurrentTrack[0].track, newCurrentIndex);
+		}
 	};
 
 	return (
@@ -63,6 +76,6 @@ const mapStateToProps = state => ({
 	currentTrack: state.currentTrack,
 	currentIndex: state.currentIndex,
 });
-const mapDispatchToProps = {setCurrentTrack, playTrackOnClick};
+const mapDispatchToProps = {setCurrentTrack, playTrackOnClick, setInitialTrack};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Track);

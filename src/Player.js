@@ -1,12 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import StyledPlayer from './styled/StyledPlayer';
+import PlayerTimer from './PlayerTimer';
 import {connect} from 'react-redux';
-import {
-	setPlayStatus,
-	setPreviousTrack,
-	setNextTrack,
-	setCurrentTrack,
-} from './store/actions';
+import {setPlayStatus, setPreviousTrack, setNextTrack} from './store/actions';
 
 const Player = ({
 	playlist,
@@ -17,16 +13,26 @@ const Player = ({
 	setNextTrack,
 	setPreviousTrack,
 }) => {
-	const audioRef = React.useRef();
-	let mounted = React.useRef(false);
+	const audioRef = useRef();
+	let mounted = useRef(false);
 
+	//Component Side Effects on Outside Events
 	useEffect(() => {
 		if (mounted.current && currentTrack) {
+			console.log(`toggle ${playStatus}`);
 			togglePlayStatus(playStatus);
+			if (playStatus) {
+				audioRef.current.addEventListener(
+					'timeupdate',
+					handleTimeUpdate,
+				);
+			}
 		} else {
 			mounted.current = true;
 		}
 	});
+
+	useEffect(() => {});
 
 	const playTrack = e => {
 		setPlayStatus(playStatus);
@@ -41,22 +47,46 @@ const Player = ({
 	};
 
 	const playNextTrack = () => {
-		let nextIndex = currentIndex + 1;
-		let nextTrack = playlist[nextIndex].track;
-		setNextTrack(nextTrack);
+		if (currentIndex === playlist.length - 1) {
+			return;
+		} else {
+			let nextIndex = currentIndex + 1;
+			let nextTrack = playlist[nextIndex].track;
+			setNextTrack(nextTrack);
+		}
 	};
 
 	const playPreviousTrack = () => {
-		let previousIndex = currentIndex - 1;
-		let previousTrack = playlist[previousIndex].track;
-		setPreviousTrack(previousTrack);
+		if (currentIndex === 0) {
+			return;
+		} else {
+			let previousIndex = currentIndex - 1;
+			let previousTrack = playlist[previousIndex].track;
+			setPreviousTrack(previousTrack);
+		}
+	};
+
+	const handleTimeUpdate = event => {
+		if (!audioRef.current) return;
+		const timeInSeconds = Math.floor(event.target.currentTime);
+		const duration = isNaN(Math.trunc(audioRef.current.duration))
+			? ''
+			: Math.trunc(audioRef.current.duration);
+		const timeObj = {
+			timeInSeconds,
+			duration,
+		};
+		console.log(timeObj);
+		return timeObj;
 	};
 
 	return (
 		<StyledPlayer currentTrack={currentTrack}>
 			{currentTrack && (
 				<div>
-					{currentTrack.title}
+					<PlayerTimer></PlayerTimer>
+					<div className="player-info">{currentTrack.title}</div>
+
 					<button
 						onClick={playPreviousTrack}
 						disabled={currentIndex === 0}
@@ -97,7 +127,6 @@ const mapDispatchToProps = {
 	setPlayStatus,
 	setNextTrack,
 	setPreviousTrack,
-	setCurrentTrack,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

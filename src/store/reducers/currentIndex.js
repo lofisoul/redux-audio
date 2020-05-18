@@ -1,4 +1,5 @@
 import {
+	SET_INITIAL_TRACK,
 	SET_CURRENT_TRACK,
 	SET_NEXT_TRACK,
 	SET_PREVIOUS_TRACK,
@@ -6,6 +7,8 @@ import {
 
 const currentIndex = (state = 0, action) => {
 	switch (action.type) {
+		case SET_INITIAL_TRACK:
+			return action.currentIndex;
 		case SET_CURRENT_TRACK:
 			return action.currentIndex;
 		case SET_NEXT_TRACK:
