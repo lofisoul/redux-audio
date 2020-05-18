@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {setCurrentTrack, playTrackOnClick} from './store/actions';
 import StyledTrack from './styled/StyledTrack';
@@ -13,18 +13,6 @@ const Track = ({
 	playTrackOnClick,
 	currentIndex,
 }) => {
-	const [isActive, setActive] = useState(false);
-	// const mounted = useRef(false);
-	// useEffect(() => {
-	// 	if (mounted.current) {
-	// 		if(isPlaying && currentTrack) {
-	// 			let id = currentTrack
-	// 		}
-	// 	} else {
-	// 		mounted.current = true;
-	// 	}
-	// });
-
 	const clickPlay = e => {
 		const id = +e.currentTarget.parentNode.dataset.id;
 		const currentTrack = playlist.filter(track => track.id === id);

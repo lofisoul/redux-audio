@@ -6,8 +6,8 @@ export const STORE_PLAYLIST = 'STORE_PLAYLIST';
 export const SET_DEFAULT_CURRENT_TRACK = 'SET_DEFAULT_CURRENT_TRACK';
 export const SET_CURRENT_TRACK = 'SET_CURRENT_TRACK';
 export const PLAY_TRACK = 'PLAY_TRACK';
-export const INCREMENT_PLAYLIST = 'INCREMENT_PLAYLIST';
-export const DECREMENT_PLAYLIST = 'DECREMENT_PLAYLIST';
+export const SET_NEXT_TRACK = 'SET_NEXT_TRACK';
+export const SET_PREVIOUS_TRACK = 'SET_PREVIOUS_TRACK';
 export const TOGGLE_PLAY_STATUS = 'TOGGLE_PLAY_STATUS';
 export const CLICK_TRACK_PLAY = 'CLICK_TRACK_PLAY';
 
@@ -65,6 +65,7 @@ export const setDefaultTrack = playlist => ({
 	type: SET_DEFAULT_CURRENT_TRACK,
 	currentTrack: playlist[0],
 });
+
 export const setCurrentTrack = (track, currentIndex) => ({
 	type: SET_CURRENT_TRACK,
 	track,
@@ -78,4 +79,14 @@ export const setPlayStatus = playStatus => ({
 
 export const playTrackOnClick = () => ({
 	type: CLICK_TRACK_PLAY,
+});
+
+export const setNextTrack = track => ({
+	type: SET_NEXT_TRACK,
+	track,
+});
+
+export const setPreviousTrack = track => ({
+	type: SET_PREVIOUS_TRACK,
+	track,
 });

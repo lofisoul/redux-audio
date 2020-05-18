@@ -8,7 +8,7 @@ const SCList = ({loadTracks, playlist, currentTrack}) => {
 	return (
 		<>
 			{loadTracks && <div>Loading</div>}
-			{playlist.length > 0 && !loadTracks && currentTrack && (
+			{playlist.length > 0 && !loadTracks && (
 				<StyledList>
 					{playlist.map((item, index) =>
 						item.id !== undefined ? (

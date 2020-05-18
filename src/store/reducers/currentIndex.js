@@ -1,13 +1,17 @@
 import {
 	SET_CURRENT_TRACK,
-	INCREMENT_PLAYLIST,
-	DECREMENT_PLAYLIST,
+	SET_NEXT_TRACK,
+	SET_PREVIOUS_TRACK,
 } from '../actions';
 
 const currentIndex = (state = 0, action) => {
 	switch (action.type) {
 		case SET_CURRENT_TRACK:
 			return action.currentIndex;
+		case SET_NEXT_TRACK:
+			return state + 1;
+		case SET_PREVIOUS_TRACK:
+			return state - 1;
 		default:
 			return state;
 	}
