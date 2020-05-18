@@ -1,0 +1,12 @@
+import {FETCH_USER} from '../actions';
+
+const user = (state = null, action) => {
+	switch (action.type) {
+		case FETCH_USER:
+			return action.user;
+		default:
+			return state;
+	}
+};
+
+export default user;

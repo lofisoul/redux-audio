@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {Inner} from './styled';
+import {Provider} from 'react-redux';
+import store from './store';
+import SCForm from './SCForm';
+import SCList from './SCList';
+import User from './User';
+import SC from 'soundcloud';
+import Player from './Player';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	useEffect(() => {
+		SC.initialize({
+			client_id: process.env.REACT_APP_SC_ID,
+		});
+	});
+	return (
+		<Provider store={store}>
+			{console.log(store.getState())}
+			<Inner>
+				<SCForm />
+				<User />
+				<SCList />
+			</Inner>
+			<Player></Player>
+		</Provider>
+	);
+};
 
 export default App;

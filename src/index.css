@@ -1,13 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;800');
+html {
+	box-sizing: border-box;
+	font-size: 10px;
+}
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	padding: 30px 15px;
+	font-weight: 400;
+	font-size: 1.6rem;
+	font-family: 'Jost', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background: linear-gradient(
+			137deg,
+			rgba(178, 230, 212, 1) 0%,
+			rgba(14, 49, 125, 1) 100%
+		)
+		no-repeat fixed;
+}
+
+@media (min-width: 576px) {
+	body {
+		padding: 30px;
+	}
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
