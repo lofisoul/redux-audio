@@ -27,7 +27,6 @@ const Track = ({
 			return;
 		}
 		if (currentTrack && id === currentTrack.id) {
-			console.log(playStatus);
 			playTrackOnClick();
 		} else {
 			setCurrentTrack(newCurrentTrack[0].track, newCurrentIndex);

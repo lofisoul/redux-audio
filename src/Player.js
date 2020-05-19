@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import StyledPlayer from './styled/StyledPlayer';
 import PlayerTimer from './PlayerTimer';
 import {connect} from 'react-redux';
@@ -19,20 +19,11 @@ const Player = ({
 	//Component Side Effects on Outside Events
 	useEffect(() => {
 		if (mounted.current && currentTrack) {
-			console.log(`toggle ${playStatus}`);
 			togglePlayStatus(playStatus);
-			if (playStatus) {
-				audioRef.current.addEventListener(
-					'timeupdate',
-					handleTimeUpdate,
-				);
-			}
 		} else {
 			mounted.current = true;
 		}
 	});
-
-	useEffect(() => {});
 
 	const playTrack = e => {
 		setPlayStatus(playStatus);
@@ -66,25 +57,14 @@ const Player = ({
 		}
 	};
 
-	const handleTimeUpdate = event => {
-		if (!audioRef.current) return;
-		const timeInSeconds = Math.floor(event.target.currentTime);
-		const duration = isNaN(Math.trunc(audioRef.current.duration))
-			? ''
-			: Math.trunc(audioRef.current.duration);
-		const timeObj = {
-			timeInSeconds,
-			duration,
-		};
-		console.log(timeObj);
-		return timeObj;
-	};
-
 	return (
 		<StyledPlayer currentTrack={currentTrack}>
 			{currentTrack && (
 				<div>
-					<PlayerTimer></PlayerTimer>
+					<PlayerTimer
+						audio={audioRef}
+						playNextTrack={playNextTrack}
+					></PlayerTimer>
 					<div className="player-info">{currentTrack.title}</div>
 
 					<button
