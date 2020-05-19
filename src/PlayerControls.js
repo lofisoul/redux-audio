@@ -1,4 +1,5 @@
 import React from 'react';
+import StyledPlayerControls from './styled/StyledPlayerControls';
 import {connect} from 'react-redux';
 
 const PlayerControls = ({
@@ -10,7 +11,7 @@ const PlayerControls = ({
 	playStatus,
 }) => {
 	return (
-		<div>
+		<StyledPlayerControls>
 			<button onClick={playPreviousTrack} disabled={currentIndex === 0}>
 				<i className="fas fa-step-backward"></i>
 			</button>
@@ -27,7 +28,7 @@ const PlayerControls = ({
 			>
 				<i className="fas fa-step-forward"></i>
 			</button>
-		</div>
+		</StyledPlayerControls>
 	);
 };
 

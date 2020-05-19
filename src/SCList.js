@@ -13,7 +13,7 @@ const SCList = ({loadTracks, playlist, currentTrack}) => {
 					{playlist.map((item, index) =>
 						item.id !== undefined ? (
 							<li key={item.track.id}>
-								<UserInfo user={item.user} />
+								<UserInfo user={item.user} index={index} />
 								<Track track={item.track} index={index} />
 							</li>
 						) : (

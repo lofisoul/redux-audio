@@ -9,9 +9,17 @@ const StyledPlayer = styled.div`
 	left: 0;
 	transition: height 0.2s cubic-bezier(0, 0.42, 0.76, 1.27);
 	z-index: 5;
-	& > {
-		max-width: 1000px;
+	& > div {
+		max-width: 1600px;
 		margin: 0 auto;
+		display: flex;
+		align-items: center;
+		padding: 5px;
+		height: 100%;
+		border-top: 3px solid #afe3d3;
+		& > div {
+			padding: 0 15px;
+		}
 	}
 `;
 export default StyledPlayer;

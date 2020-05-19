@@ -29,8 +29,9 @@ const StyledTrack = styled.div`
 		@media (min-width: 576px) {
 			& img {
 				display: inline-block;
-				object-fit: contain;
+				object-fit: cover;
 				height: 100%;
+				width: 100%;
 			}
 			& .fas {
 				font-size: 4rem;

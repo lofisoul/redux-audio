@@ -36,7 +36,14 @@ const Track = ({
 	return (
 		<StyledTrack data-id={track.id} index={index}>
 			<div className="track-img" onClick={clickPlay}>
-				<img src={track.artwork_url} alt={track.title} />
+				{track.artwork_url ? (
+					<img src={track.artwork_url} alt={track.title} />
+				) : (
+					<img
+						src="https://gradientjoy.com/200?id=229"
+						alt={track.title}
+					/>
+				)}
 				{playStatus && currentIndex === index ? (
 					<i className="fas fa-pause"></i>
 				) : (
