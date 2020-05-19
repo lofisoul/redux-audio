@@ -3,6 +3,7 @@ import {
 	SET_CURRENT_TRACK,
 	SET_NEXT_TRACK,
 	SET_PREVIOUS_TRACK,
+	RESET_PLAYER,
 } from '../actions';
 
 const currentIndex = (state = 0, action) => {
@@ -15,6 +16,8 @@ const currentIndex = (state = 0, action) => {
 			return state + 1;
 		case SET_PREVIOUS_TRACK:
 			return state - 1;
+		case RESET_PLAYER:
+			return 0;
 		default:
 			return state;
 	}

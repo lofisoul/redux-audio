@@ -1,8 +1,15 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import StyledPlayer from './styled/StyledPlayer';
 import PlayerTimer from './PlayerTimer';
+import PlayerControls from './PlayerControls';
+import PlayerInfo from './PlayerInfo';
 import {connect} from 'react-redux';
-import {setPlayStatus, setPreviousTrack, setNextTrack} from './store/actions';
+import {
+	setPlayStatus,
+	setPreviousTrack,
+	setNextTrack,
+	resetPlayer,
+} from './store/actions';
 
 const Player = ({
 	playlist,
@@ -12,6 +19,7 @@ const Player = ({
 	setPlayStatus,
 	setNextTrack,
 	setPreviousTrack,
+	resetPlayer,
 }) => {
 	const audioRef = useRef();
 	let mounted = useRef(false);
@@ -39,10 +47,13 @@ const Player = ({
 
 	const playNextTrack = () => {
 		if (currentIndex === playlist.length - 1) {
-			return;
+			console.log('dispatch reset!');
+			resetPlayer();
 		} else {
 			let nextIndex = currentIndex + 1;
+			console.log(nextIndex);
 			let nextTrack = playlist[nextIndex].track;
+			console.log(nextTrack);
 			setNextTrack(nextTrack);
 		}
 	};
@@ -60,37 +71,24 @@ const Player = ({
 	return (
 		<StyledPlayer currentTrack={currentTrack}>
 			{currentTrack && (
-				<div>
-					<PlayerTimer
-						audio={audioRef}
-						playNextTrack={playNextTrack}
-					></PlayerTimer>
-					<div className="player-info">{currentTrack.title}</div>
-
-					<button
-						onClick={playPreviousTrack}
-						disabled={currentIndex === 0}
-					>
-						<i className="fas fa-step-backward"></i>
-					</button>
-					<button onClick={playTrack}>
-						{playStatus ? (
-							<i className="fas fa-pause"></i>
-						) : (
-							<i className="fas fa-play"></i>
-						)}
-					</button>
-					<button
-						onClick={playNextTrack}
-						disabled={currentIndex === playlist.length - 1}
-					>
-						<i className="fas fa-step-forward"></i>
-					</button>
+				<>
+					<div>
+						<PlayerControls
+							playTrack={playTrack}
+							playPreviousTrack={playPreviousTrack}
+							playNextTrack={playNextTrack}
+						/>
+						<PlayerTimer
+							audio={audioRef}
+							playNextTrack={playNextTrack}
+						></PlayerTimer>
+						<PlayerInfo />
+					</div>
 					<audio
 						src={`${currentTrack.stream_url}?client_id=${process.env.REACT_APP_SC_ID}`}
 						ref={audioRef}
 					/>
-				</div>
+				</>
 			)}
 		</StyledPlayer>
 	);
@@ -107,6 +105,7 @@ const mapDispatchToProps = {
 	setPlayStatus,
 	setNextTrack,
 	setPreviousTrack,
+	resetPlayer,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

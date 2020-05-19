@@ -2,6 +2,7 @@ import {
 	TOGGLE_PLAY_STATUS,
 	CLICK_TRACK_PLAY,
 	SET_INITIAL_TRACK,
+	RESET_PLAYER,
 } from '../actions';
 
 const playStatus = (state = false, action) => {
@@ -13,6 +14,8 @@ const playStatus = (state = false, action) => {
 			return !state;
 		case SET_INITIAL_TRACK:
 			return !state;
+		case RESET_PLAYER:
+			return false;
 		default:
 			return state;
 	}

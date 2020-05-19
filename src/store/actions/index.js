@@ -10,6 +10,7 @@ export const SET_NEXT_TRACK = 'SET_NEXT_TRACK';
 export const SET_PREVIOUS_TRACK = 'SET_PREVIOUS_TRACK';
 export const TOGGLE_PLAY_STATUS = 'TOGGLE_PLAY_STATUS';
 export const CLICK_TRACK_PLAY = 'CLICK_TRACK_PLAY';
+export const RESET_PLAYER = 'RESET_PLAYER';
 
 export const fetchUser = username => (dispatch, getState, api) => {
 	dispatch(loadUser());
@@ -85,4 +86,8 @@ export const setNextTrack = track => ({
 export const setPreviousTrack = track => ({
 	type: SET_PREVIOUS_TRACK,
 	track,
+});
+
+export const resetPlayer = () => ({
+	type: RESET_PLAYER,
 });
