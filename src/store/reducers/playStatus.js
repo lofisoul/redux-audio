@@ -6,7 +6,6 @@ import {
 } from '../actions';
 
 const playStatus = (state = false, action) => {
-	console.log(action);
 	switch (action.type) {
 		case TOGGLE_PLAY_STATUS:
 			return !action.playStatus;

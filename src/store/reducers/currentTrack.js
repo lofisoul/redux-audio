@@ -4,6 +4,7 @@ import {
 	SET_NEXT_TRACK,
 	SET_PREVIOUS_TRACK,
 	RESET_PLAYER,
+	STREAM_NEXT_TRACK,
 } from '../actions';
 
 const currentTrack = (state = null, action) => {
@@ -14,6 +15,11 @@ const currentTrack = (state = null, action) => {
 			return action.track;
 		case SET_NEXT_TRACK:
 			return action.track;
+		case STREAM_NEXT_TRACK:
+			return {
+				...state,
+				...action.payload,
+			};
 		case SET_PREVIOUS_TRACK:
 			return action.track;
 		case RESET_PLAYER:

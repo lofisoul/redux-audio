@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import StyledPlayer from './styled/StyledPlayer';
 import PlayerTimer from './PlayerTimer';
 import PlayerControls from './PlayerControls';
@@ -41,19 +41,22 @@ const Player = ({
 		if (playStatus) {
 			audioRef.current.play();
 		} else {
-			audioRef.current.pause();
+			const audioPromise = audioRef.current.play();
+			if (audioPromise !== undefined) {
+				audioPromise.then(() => {
+					audioRef.current.pause();
+					audioRef.current.currentTime = 0;
+				});
+			}
 		}
 	};
 
 	const playNextTrack = () => {
 		if (currentIndex === playlist.length - 1) {
-			console.log('dispatch reset!');
 			resetPlayer();
 		} else {
 			let nextIndex = currentIndex + 1;
-			console.log(nextIndex);
 			let nextTrack = playlist[nextIndex].track;
-			console.log(nextTrack);
 			setNextTrack(nextTrack);
 		}
 	};
@@ -78,15 +81,13 @@ const Player = ({
 							playPreviousTrack={playPreviousTrack}
 							playNextTrack={playNextTrack}
 						/>
-						<PlayerTimer
-							audio={audioRef}
-							playNextTrack={playNextTrack}
-						></PlayerTimer>
+						<PlayerTimer audio={audioRef}></PlayerTimer>
 						<PlayerInfo />
 					</div>
 					<audio
 						src={`${currentTrack.stream_url}?client_id=${process.env.REACT_APP_SC_ID}`}
 						ref={audioRef}
+						autoPlay
 					/>
 				</>
 			)}

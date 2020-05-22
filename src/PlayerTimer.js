@@ -1,16 +1,40 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import StyledTimer from './styled/StyledTimer';
+import {resetPlayer, handleStream} from './store/actions';
 
-const PlayerTimer = ({currentTrack, audio, playNextTrack}) => {
+const PlayerTimer = ({
+	currentTrack,
+	audio,
+	playlist,
+	currentIndex,
+	resetPlayer,
+	handleStream,
+}) => {
 	// const [playerTime, setPlayerTime] = useState(null);
-
+	let mounted = useRef(false);
 	useEffect(() => {
-		if (audio) {
+		if (mounted && currentTrack) {
 			audio.current.addEventListener('timeupdate', handleTimeUpdate);
 			audio.current.addEventListener('timeupdate', handleProgress);
+			audio.current.addEventListener('ended', () => {
+				handleNextTrack();
+				audio.current.load();
+				audio.current.play();
+			});
 		}
 	});
+
+	const handleNextTrack = () => {
+		if (currentIndex === playlist.length - 1) {
+			console.log('dispatch reset!');
+			resetPlayer();
+		} else {
+			const nextIndex = currentIndex + 1;
+			const nextTrack = playlist[nextIndex].track;
+			handleStream(nextTrack);
+		}
+	};
 
 	const padZero = n => {
 		return n < 10 ? '0' + n : n;
@@ -41,15 +65,16 @@ const PlayerTimer = ({currentTrack, audio, playNextTrack}) => {
 			duration: secondsToTime(duration),
 		};
 
-		if (timeInSeconds === duration) {
-			playNextTrack();
-		}
 		currentTimeEl.textContent = timeObj
 			? `${timeObj.currentTime}`
 			: `Loading`;
 		durationTimeEl.textContent = timeObj
 			? `${timeObj.duration}`
 			: `Loading`;
+
+		// if (audio.current.currentTime >= audio.current.duration) {
+		// 	handleNextTrack();
+		// }
 	};
 
 	const handleProgress = event => {
@@ -74,14 +99,15 @@ const PlayerTimer = ({currentTrack, audio, playNextTrack}) => {
 
 	const clickScrubber = event => {
 		if (!audio.current) return;
+		// console.log('click the scrubber');
 		const progressBar = document.getElementById('progress-bar');
 		const scrubber = document.getElementById('progress-scrubber');
 		const boundary = event.target.getBoundingClientRect();
 		const xPos = Math.floor(event.clientX - boundary.left);
-		console.log(xPos);
-		console.log(event.target.offsetWidth);
+		// console.log(xPos);
+		// console.log(event.target.offsetWidth);
 		const progressDistance = xPos / event.target.offsetWidth;
-		console.log(progressDistance);
+		// console.log(progressDistance);
 		//move scrubber and progress
 		progressBar.style.width = isNaN(progressDistance)
 			? 0
@@ -102,9 +128,14 @@ const PlayerTimer = ({currentTrack, audio, playNextTrack}) => {
 					<div id="player-time-current"></div>
 					<div id="player-timeline" onClick={clickScrubber}>
 						<div className="timeline"></div>
+
 						<div id="progress-bar"></div>
-						<button id="progress-scrubber"></button>
+						<button
+							id="progress-scrubber"
+							className="handle"
+						></button>
 					</div>
+
 					<div id="player-time-duration"></div>
 				</>
 			)}
@@ -114,11 +145,10 @@ const PlayerTimer = ({currentTrack, audio, playNextTrack}) => {
 
 const mapStateToProps = state => ({
 	currentTrack: state.currentTrack,
-	// playlist: state.playlist,
-	// currentIndex: state.currentIndex,
-	// playStatus: state.playStatus,
+	playlist: state.playlist,
+	currentIndex: state.currentIndex,
 });
 
-//const mapDispatchToProps = {setNextTrack, setPlayStatus};
+const mapDispatchToProps = {handleStream, resetPlayer};
 
-export default connect(mapStateToProps)(PlayerTimer);
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerTimer);

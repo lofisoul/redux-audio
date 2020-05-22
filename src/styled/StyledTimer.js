@@ -13,6 +13,7 @@ const StyledTimer = styled.div`
 		position: relative;
 		align-items: center;
 		cursor: pointer;
+		height: 100%;
 	}
 	& .timeline {
 		width: 100%;

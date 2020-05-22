@@ -1,3 +1,5 @@
+import store from '../../store';
+
 export const START_LOADING_USER = 'START_LOADING';
 export const FETCH_USER = 'FETCH_USER';
 export const START_LOADING_TRACKS = 'START_LOADING_TRACKS';
@@ -7,6 +9,7 @@ export const SET_INITIAL_TRACK = 'SET_INITIAL_TRACK';
 export const SET_CURRENT_TRACK = 'SET_CURRENT_TRACK';
 export const PLAY_TRACK = 'PLAY_TRACK';
 export const SET_NEXT_TRACK = 'SET_NEXT_TRACK';
+export const STREAM_NEXT_TRACK = 'STREAM_NEXT_TRACK';
 export const SET_PREVIOUS_TRACK = 'SET_PREVIOUS_TRACK';
 export const TOGGLE_PLAY_STATUS = 'TOGGLE_PLAY_STATUS';
 export const CLICK_TRACK_PLAY = 'CLICK_TRACK_PLAY';
@@ -91,3 +94,32 @@ export const setPreviousTrack = track => ({
 export const resetPlayer = () => ({
 	type: RESET_PLAYER,
 });
+
+export const streamNextTrack = track => ({
+	type: STREAM_NEXT_TRACK,
+	payload: track,
+});
+
+export const handleStream = track => dispatch => {
+	console.log('track ' + track.title);
+	const id = track.id;
+	const projectedIndex = store
+		.getState()
+		.playlist.map(track => track.id)
+		.indexOf(id);
+
+	//a b c d
+	//c
+	if (
+		track.id === store.getState().currentTrack.id &&
+		track.stream_url !== undefined &&
+		track.id !==
+			store.getState().playlist[store.getState().currentIndex].track.id &&
+		projectedIndex - 1 !== store.getState().currentIndex &&
+		!track
+	) {
+		return;
+	} else {
+		dispatch(streamNextTrack(track));
+	}
+};
