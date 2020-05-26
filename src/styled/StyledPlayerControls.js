@@ -8,6 +8,7 @@ const StyledPlayerControls = styled.div`
 		font-size: 1.8rem;
 		padding: 5px 5px;
 		margin-left: 5px;
+		background: none;
 		@media (min-width: 576px) {
 			font-size: 2.5rem;
 		}
