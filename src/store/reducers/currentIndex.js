@@ -8,7 +8,6 @@ import {
 } from '../actions';
 
 const currentIndex = (state = 0, action) => {
-	console.log(state);
 	switch (action.type) {
 		case SET_INITIAL_TRACK:
 			return action.currentIndex;

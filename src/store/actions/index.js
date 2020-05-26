@@ -101,7 +101,6 @@ export const streamNextTrack = track => ({
 });
 
 export const handleStream = track => dispatch => {
-	console.log('track ' + track.title);
 	const id = track.id;
 	const projectedIndex = store
 		.getState()
