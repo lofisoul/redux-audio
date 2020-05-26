@@ -117,7 +117,7 @@ const api = {
 						item,
 						resolvedUser,
 					);
-					console.log(index);
+
 					return newItem;
 				}),
 			);

@@ -1,15 +1,19 @@
+import store from '../../store';
+
 export const START_LOADING_USER = 'START_LOADING';
 export const FETCH_USER = 'FETCH_USER';
 export const START_LOADING_TRACKS = 'START_LOADING_TRACKS';
 export const FETCH_TRACKS = 'FETCH_TRACKS';
 export const STORE_PLAYLIST = 'STORE_PLAYLIST';
-export const SET_DEFAULT_CURRENT_TRACK = 'SET_DEFAULT_CURRENT_TRACK';
+export const SET_INITIAL_TRACK = 'SET_INITIAL_TRACK';
 export const SET_CURRENT_TRACK = 'SET_CURRENT_TRACK';
 export const PLAY_TRACK = 'PLAY_TRACK';
-export const INCREMENT_PLAYLIST = 'INCREMENT_PLAYLIST';
-export const DECREMENT_PLAYLIST = 'DECREMENT_PLAYLIST';
+export const SET_NEXT_TRACK = 'SET_NEXT_TRACK';
+export const STREAM_NEXT_TRACK = 'STREAM_NEXT_TRACK';
+export const SET_PREVIOUS_TRACK = 'SET_PREVIOUS_TRACK';
 export const TOGGLE_PLAY_STATUS = 'TOGGLE_PLAY_STATUS';
 export const CLICK_TRACK_PLAY = 'CLICK_TRACK_PLAY';
+export const RESET_PLAYER = 'RESET_PLAYER';
 
 export const fetchUser = username => (dispatch, getState, api) => {
 	dispatch(loadUser());
@@ -34,15 +38,10 @@ const storeUser = user => ({
 //playlist config
 export const fetchTracks = username => (dispatch, getState, api) => {
 	dispatch(loadTracks());
-	api.createPlaylist(username)
-		.then(playlist => {
-			dispatch(storeTracks(playlist));
-			return playlist;
-		})
-		.then(playlist => {
-			console.log(playlist);
-			dispatch(setDefaultTrack(playlist));
-		});
+	api.createPlaylist(username).then(playlist => {
+		dispatch(storeTracks(playlist));
+		return playlist;
+	});
 };
 
 const loadTracks = () => ({
@@ -61,10 +60,12 @@ const storeTracks = playlist => ({
 // 	});
 // };
 
-export const setDefaultTrack = playlist => ({
-	type: SET_DEFAULT_CURRENT_TRACK,
-	currentTrack: playlist[0],
+export const setInitialTrack = (track, currentIndex) => ({
+	type: SET_INITIAL_TRACK,
+	track,
+	currentIndex,
 });
+
 export const setCurrentTrack = (track, currentIndex) => ({
 	type: SET_CURRENT_TRACK,
 	track,
@@ -79,3 +80,45 @@ export const setPlayStatus = playStatus => ({
 export const playTrackOnClick = () => ({
 	type: CLICK_TRACK_PLAY,
 });
+
+export const setNextTrack = track => ({
+	type: SET_NEXT_TRACK,
+	track,
+});
+
+export const setPreviousTrack = track => ({
+	type: SET_PREVIOUS_TRACK,
+	track,
+});
+
+export const resetPlayer = () => ({
+	type: RESET_PLAYER,
+});
+
+export const streamNextTrack = track => ({
+	type: STREAM_NEXT_TRACK,
+	payload: track,
+});
+
+export const handleStream = track => dispatch => {
+	const id = track.id;
+	const projectedIndex = store
+		.getState()
+		.playlist.map(track => track.id)
+		.indexOf(id);
+
+	//a b c d
+	//c
+	if (
+		track.id === store.getState().currentTrack.id &&
+		track.stream_url !== undefined &&
+		track.id !==
+			store.getState().playlist[store.getState().currentIndex].track.id &&
+		projectedIndex - 1 !== store.getState().currentIndex &&
+		!track
+	) {
+		return;
+	} else {
+		dispatch(streamNextTrack(track));
+	}
+};

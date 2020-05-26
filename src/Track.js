@@ -1,42 +1,49 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {setCurrentTrack, playTrackOnClick} from './store/actions';
+import {
+	setCurrentTrack,
+	playTrackOnClick,
+	setInitialTrack,
+} from './store/actions';
 import StyledTrack from './styled/StyledTrack';
 
 const Track = ({
 	track,
 	index,
 	currentTrack,
+	setInitialTrack,
 	setCurrentTrack,
 	playlist,
 	playStatus,
 	playTrackOnClick,
 	currentIndex,
 }) => {
-	const [isActive, setActive] = useState(false);
-	// const mounted = useRef(false);
-	// useEffect(() => {
-	// 	if (mounted.current) {
-	// 		if(isPlaying && currentTrack) {
-	// 			let id = currentTrack
-	// 		}
-	// 	} else {
-	// 		mounted.current = true;
-	// 	}
-	// });
-
 	const clickPlay = e => {
 		const id = +e.currentTarget.parentNode.dataset.id;
-		const currentTrack = playlist.filter(track => track.id === id);
-		const currentIndex = playlist.map(track => track.id).indexOf(id);
-		setCurrentTrack(currentTrack[0].track, currentIndex);
-		playTrackOnClick();
+		const newCurrentTrack = playlist.filter(track => track.id === id);
+		const newCurrentIndex = playlist.map(track => track.id).indexOf(id);
+		if (!currentTrack) {
+			setInitialTrack(newCurrentTrack[0].track, newCurrentIndex);
+			return;
+		}
+		if (currentTrack && id === currentTrack.id) {
+			playTrackOnClick();
+		} else {
+			setCurrentTrack(newCurrentTrack[0].track, newCurrentIndex);
+		}
 	};
 
 	return (
 		<StyledTrack data-id={track.id} index={index}>
 			<div className="track-img" onClick={clickPlay}>
-				<img src={track.artwork_url} alt={track.title} />
+				{track.artwork_url ? (
+					<img src={track.artwork_url} alt={track.title} />
+				) : (
+					<img
+						src="https://gradientjoy.com/200?id=229"
+						alt={track.title}
+					/>
+				)}
 				{playStatus && currentIndex === index ? (
 					<i className="fas fa-pause"></i>
 				) : (
@@ -75,6 +82,6 @@ const mapStateToProps = state => ({
 	currentTrack: state.currentTrack,
 	currentIndex: state.currentIndex,
 });
-const mapDispatchToProps = {setCurrentTrack, playTrackOnClick};
+const mapDispatchToProps = {setCurrentTrack, playTrackOnClick, setInitialTrack};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Track);

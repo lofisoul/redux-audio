@@ -1,11 +1,29 @@
-import {SET_CURRENT_TRACK, SET_DEFAULT_CURRENT_TRACK} from '../actions';
+import {
+	SET_INITIAL_TRACK,
+	SET_CURRENT_TRACK,
+	SET_NEXT_TRACK,
+	SET_PREVIOUS_TRACK,
+	RESET_PLAYER,
+	STREAM_NEXT_TRACK,
+} from '../actions';
 
 const currentTrack = (state = null, action) => {
 	switch (action.type) {
-		case SET_DEFAULT_CURRENT_TRACK:
-			return action.currentTrack;
+		case SET_INITIAL_TRACK:
+			return action.track;
 		case SET_CURRENT_TRACK:
 			return action.track;
+		case SET_NEXT_TRACK:
+			return action.track;
+		case STREAM_NEXT_TRACK:
+			return {
+				...state,
+				...action.payload,
+			};
+		case SET_PREVIOUS_TRACK:
+			return action.track;
+		case RESET_PLAYER:
+			return null;
 		default:
 			return state;
 	}
