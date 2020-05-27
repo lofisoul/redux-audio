@@ -54,10 +54,14 @@ const SCForm = ({
 				<FormWrap>
 					<h2>Discover new vibes</h2>
 					<p>
-						Enter a soundcloud username below to generate a playlist
-						of likes from that user and users who liked those
-						tracks. Find users who you vibe with and explore new
-						tracks.
+						Enter a{' '}
+						<i
+							className="fab fa-soundcloud"
+							style={{color: '#ff7700'}}
+						></i>{' '}
+						soundcloud username below to generate a playlist of
+						likes from that user and users who liked those tracks.
+						Find users who you vibe with and explore new tracks.
 					</p>
 					<StyledForm onSubmit={handleSubmit}>
 						<input
