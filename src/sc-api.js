@@ -1,4 +1,6 @@
 import SC from 'soundcloud';
+import store from './store';
+import {handleError} from './store/actions';
 
 SC.initialize({
 	client_id: process.env.REACT_APP_SC_ID,
@@ -31,14 +33,19 @@ const api = {
 			);
 			return userToResolve;
 		} catch (err) {
+			console.log(err);
 			const errorMsg =
 				err.status === 404
 					? `Whoops! That user doesn't exist!`
 					: err.message;
-			return errorMsg;
+			store.dispatch(handleError(errorMsg));
+			return null;
 		}
 	},
 	async getUserFaves(resolvedUser) {
+		if (resolvedUser === null) {
+			return;
+		}
 		try {
 			const favorites = await SC.get(
 				`/users/${resolvedUser.id}/favorites`,
@@ -50,8 +57,6 @@ const api = {
 
 			return favorites;
 		} catch (err) {
-			console.log(err);
-			console.log(err.message);
 			return err;
 		}
 	},
@@ -81,6 +86,10 @@ const api = {
 			while (randomTrack.id === track.id) {
 				randomTrack = shuffle(userFaves.collection, 1)[0];
 			}
+			//handling issue of non-streamable track
+			while (randomTrack.streamable === false) {
+				randomTrack = shuffle(userFaves.collection, 1)[0];
+			}
 
 			let randomArr = [];
 			const userFave = {
@@ -107,8 +116,10 @@ const api = {
 		try {
 			let resolvedUser = await this.fetchUser(user);
 			const userFaves = await this.getUserFaves(resolvedUser);
-
-			const sortedTracks = shuffle(userFaves.collection, playlistSize);
+			const filteredTracks = userFaves.collection.filter(
+				track => track.streamable,
+			);
+			const sortedTracks = shuffle(filteredTracks, playlistSize);
 			//run logic for getting random song based on users that liked 5 sorted tracks
 
 			let randomPlaylist = await Promise.all(

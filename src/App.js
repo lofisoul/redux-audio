@@ -7,6 +7,7 @@ import SCForm from './SCForm';
 import SCList from './SCList';
 import SC from 'soundcloud';
 import Player from './Player';
+import AlertList from './AlertList';
 
 const App = () => {
 	useEffect(() => {
@@ -17,6 +18,7 @@ const App = () => {
 	return (
 		<Provider store={store}>
 			<Header />
+			<AlertList />
 			<Inner>
 				<SCForm />
 				<SCList />

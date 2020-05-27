@@ -19,6 +19,9 @@ const DivRight = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 2rem;
+	& button {
+		margin-left: 1rem;
+	}
 `;
 
 const SCForm = ({
@@ -32,9 +35,12 @@ const SCForm = ({
 	const [username, setUsername] = useState('');
 	const handleSubmit = e => {
 		e.preventDefault();
-		fetchUser(username);
 		fetchTracks(username);
 		setUsername('');
+	};
+
+	const handleRefetch = e => {
+		fetchTracks(user.username);
 	};
 
 	const handleReset = e => {
@@ -48,10 +54,14 @@ const SCForm = ({
 				<FormWrap>
 					<h2>Discover new vibes</h2>
 					<p>
-						Enter a soundcloud username below to generate a playlist
-						of likes from that user and users who liked those
-						tracks. Find users who you vibe with and explore new
-						tracks.
+						Enter a{' '}
+						<i
+							className="fab fa-soundcloud"
+							style={{color: '#ff7700'}}
+						></i>{' '}
+						soundcloud username below to generate a playlist of
+						likes from that user and users who liked those tracks.
+						Find users who you vibe with and explore new tracks.
 					</p>
 					<StyledForm onSubmit={handleSubmit}>
 						<input
@@ -68,6 +78,9 @@ const SCForm = ({
 				<DivRight>
 					<Button type="button" onClick={handleReset}>
 						Start Over
+					</Button>
+					<Button type="button" onClick={handleRefetch}>
+						Refetch Playlist
 					</Button>
 				</DivRight>
 			)}

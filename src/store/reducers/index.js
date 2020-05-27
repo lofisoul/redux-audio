@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import user from './user';
+import errorMsgs from './errorMsgs';
 import loadUser from './loadUser';
 import playlist from './playlist';
 import loadTracks from './loadTracks';
@@ -15,4 +16,5 @@ export default combineReducers({
 	currentTrack,
 	currentIndex,
 	playStatus,
+	errorMsgs,
 });

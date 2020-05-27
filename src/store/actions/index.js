@@ -15,6 +15,8 @@ export const TOGGLE_PLAY_STATUS = 'TOGGLE_PLAY_STATUS';
 export const CLICK_TRACK_PLAY = 'CLICK_TRACK_PLAY';
 export const RESET_PLAYER = 'RESET_PLAYER';
 export const RESET_USER = 'RESET_USER';
+export const HANDLE_ERROR = 'HANDLE_ERROR';
+export const REMOVE_ERROR = 'REMOVE_ERROR';
 
 export const fetchUser = username => (dispatch, getState, api) => {
 	dispatch(loadUser());
@@ -38,11 +40,22 @@ const storeUser = user => ({
 
 //playlist config
 export const fetchTracks = username => (dispatch, getState, api) => {
+	dispatch(loadUser());
 	dispatch(loadTracks());
-	api.createPlaylist(username).then(playlist => {
-		dispatch(storeTracks(playlist));
-		return playlist;
-	});
+	api.fetchUser(username)
+		.then(user => {
+			dispatch(storeUser(user));
+			return user;
+		})
+		.then(user => {
+			api.createPlaylist(user.username).then(playlist => {
+				dispatch(storeTracks(playlist));
+				return playlist;
+			});
+		})
+		.catch(err => {
+			console.log(err);
+		});
 };
 
 const loadTracks = () => ({
@@ -126,4 +139,14 @@ export const handleStream = track => dispatch => {
 
 export const resetUser = () => ({
 	type: RESET_USER,
+});
+
+export const handleError = errorMsg => ({
+	type: HANDLE_ERROR,
+	errorMsg,
+});
+
+export const removeError = index => ({
+	type: REMOVE_ERROR,
+	index,
 });

@@ -30,7 +30,7 @@ const SpinDiv = styled.div`
 const Loader = () => {
 	return (
 		<SpinDiv>
-			<i class="fas fa-compact-disc"></i>
+			<i className="fas fa-compact-disc"></i>
 		</SpinDiv>
 	);
 };
