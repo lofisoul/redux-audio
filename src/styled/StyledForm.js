@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 
-export const Inner = styled.div`
-	max-width: 1050px;
-	margin: 0 auto;
-	padding: 30px 15px 100px;
-`;
-
-export const StyledForm = styled.form`
+const StyledForm = styled.form`
 	& input[type='text'] {
 		display: block;
 		width: 100%;
@@ -56,3 +50,5 @@ export const StyledList = styled.ul`
 		overflow: hidden;
 	}
 `;
+
+export default StyledForm;

@@ -7,6 +7,12 @@ const StyledUserInfo = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
+    max-width: ${props => (props.isOpen ? 'none' : '250px')};
+    transition: max-width 0.2s;
+    transition-timing-function: cubic-bezier(0, 0.42, 0.76, 1.27);
+    @media (min-width:576px) {
+        max-width: ${props => (props.isOpen ? 'none' : '280px')};
+    }
 	& .user-img {
         height: 100%;
         display: flex;

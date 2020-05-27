@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyledForm} from './styled';
+import StyledForm from './styled/StyledForm';
 import {connect} from 'react-redux';
 import {fetchUser, fetchTracks} from './store/actions';
 
