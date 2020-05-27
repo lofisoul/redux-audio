@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {Inner} from './styled';
 import {Provider} from 'react-redux';
 import store from './store';
+import Header from './Header';
 import SCForm from './SCForm';
 import SCList from './SCList';
-import User from './User';
 import SC from 'soundcloud';
 import Player from './Player';
 
@@ -16,9 +16,9 @@ const App = () => {
 	});
 	return (
 		<Provider store={store}>
+			<Header />
 			<Inner>
 				<SCForm />
-				<User />
 				<SCList />
 			</Inner>
 			<Player></Player>

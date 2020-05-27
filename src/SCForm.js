@@ -1,38 +1,87 @@
 import React, {useState} from 'react';
-import {StyledForm} from './styled';
 import {connect} from 'react-redux';
-import {fetchUser, fetchTracks} from './store/actions';
+import {fetchUser, fetchTracks, resetUser} from './store/actions';
+import styled from 'styled-components';
+import StyledForm from './styled/StyledForm';
+import {Button} from './styled';
 
-const SCForm = ({fetchUser, fetchTracks, user}) => {
+const FormWrap = styled.div`
+	border-radius: 7px;
+	box-shadow: 5px 5px 0px 1px rgba(0, 0, 0, 0.5);
+	padding: 20px;
+	background: #fff;
+	margin-bottom: 2rem;
+	max-width: 470px;
+	margin: 0 auto;
+`;
+
+const DivRight = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 2rem;
+`;
+
+const SCForm = ({
+	fetchUser,
+	fetchTracks,
+	user,
+	resetUser,
+	loadTracks,
+	loadUser,
+}) => {
 	const [username, setUsername] = useState('');
 	const handleSubmit = e => {
 		e.preventDefault();
 		fetchUser(username);
 		fetchTracks(username);
+		setUsername('');
 	};
+
+	const handleReset = e => {
+		e.preventDefault();
+		resetUser();
+	};
+
 	return (
-		<div>
-			<h2>Soundcloud Form</h2>
-			<StyledForm onSubmit={handleSubmit}>
-				{!user && (
-					<input
-						type="text"
-						name="username"
-						value={username}
-						onChange={e => setUsername(e.target.value)}
-					/>
-				)}
-				<button type="submit">{!user ? 'Launch' : 'Reset'}</button>
-			</StyledForm>
-		</div>
+		<>
+			{!user && !loadUser && (
+				<FormWrap>
+					<h2>Discover new vibes</h2>
+					<p>
+						Enter a soundcloud username below to generate a playlist
+						of likes from that user and users who liked those
+						tracks. Find users who you vibe with and explore new
+						tracks.
+					</p>
+					<StyledForm onSubmit={handleSubmit}>
+						<input
+							type="text"
+							name="username"
+							value={username}
+							onChange={e => setUsername(e.target.value)}
+						/>
+						<Button type="submit">Launch</Button>
+					</StyledForm>
+				</FormWrap>
+			)}
+			{user && !loadTracks && (
+				<DivRight>
+					<Button type="button" onClick={handleReset}>
+						Start Over
+					</Button>
+				</DivRight>
+			)}
+		</>
 	);
 };
 
 const mapStateToProps = state => {
 	return {
 		user: state.user,
+		loadTracks: state.loadTracks,
+		loadUser: state.loadUser,
 	};
 };
-const mapDispatchToProps = {fetchUser, fetchTracks};
+const mapDispatchToProps = {fetchUser, fetchTracks, resetUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SCForm);

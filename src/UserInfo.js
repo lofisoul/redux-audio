@@ -11,7 +11,14 @@ const UserInfo = ({user}) => {
 	return (
 		<StyledUserInfo isOpen={isOpen}>
 			<div className="user-img" onClick={toggleDrawer}>
-				<img src={user.avatar_url} alt={user.username} />
+				{user.avatar_url ? (
+					<img src={user.avatar_url} alt={user.username} />
+				) : (
+					<img
+						src="https://gradientjoy.com/200?id=229"
+						alt={user.username}
+					/>
+				)}
 			</div>
 			<div className="user-drawer">
 				<h3>{user.username}</h3>
