@@ -23,16 +23,6 @@ const StyledForm = styled.form`
 			box-shadow: 0 0 0 0.2rem rgba(14, 49, 125, 0.25);
 		}
 	}
-	& button {
-		border-radius: 0.25rem;
-		background: rgb(14, 49, 125);
-		color: #fff;
-		font-weight: 800;
-		border: 0;
-		text-transform: uppercase;
-		padding: 1rem 3rem;
-		font-size: 1.3rem;
-	}
 `;
 
 export const StyledList = styled.ul`

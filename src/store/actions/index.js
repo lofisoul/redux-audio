@@ -14,6 +14,7 @@ export const SET_PREVIOUS_TRACK = 'SET_PREVIOUS_TRACK';
 export const TOGGLE_PLAY_STATUS = 'TOGGLE_PLAY_STATUS';
 export const CLICK_TRACK_PLAY = 'CLICK_TRACK_PLAY';
 export const RESET_PLAYER = 'RESET_PLAYER';
+export const RESET_USER = 'RESET_USER';
 
 export const fetchUser = username => (dispatch, getState, api) => {
 	dispatch(loadUser());
@@ -122,3 +123,7 @@ export const handleStream = track => dispatch => {
 		dispatch(streamNextTrack(track));
 	}
 };
+
+export const resetUser = () => ({
+	type: RESET_USER,
+});

@@ -2,13 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Track from './Track';
 import UserInfo from './UserInfo';
-import {StyledList} from './styled';
+import StyledList from './styled/StyledList';
+import Loader from './styled/Loader';
 
-const SCList = ({loadTracks, playlist, currentTrack}) => {
+const SCList = ({loadTracks, playlist, user}) => {
 	return (
 		<>
-			{loadTracks && <div>Loading</div>}
-			{playlist.length > 0 && !loadTracks && (
+			{loadTracks && <Loader />}
+			{playlist.length > 0 && !loadTracks && user && (
 				<StyledList>
 					{playlist.map((item, index) =>
 						item.id !== undefined ? (
@@ -29,7 +30,7 @@ const SCList = ({loadTracks, playlist, currentTrack}) => {
 const mapStateToProps = state => ({
 	loadTracks: state.loadTracks,
 	playlist: state.playlist,
-	currentTrack: state.currentTrack,
+	user: state.user,
 });
 
 export default connect(mapStateToProps)(SCList);
