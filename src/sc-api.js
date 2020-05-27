@@ -1,4 +1,6 @@
 import SC from 'soundcloud';
+import store from './store';
+import {handleError} from './store/actions';
 
 SC.initialize({
 	client_id: process.env.REACT_APP_SC_ID,
@@ -31,14 +33,19 @@ const api = {
 			);
 			return userToResolve;
 		} catch (err) {
+			console.log(err);
 			const errorMsg =
 				err.status === 404
 					? `Whoops! That user doesn't exist!`
 					: err.message;
-			return errorMsg;
+			store.dispatch(handleError(errorMsg));
+			return null;
 		}
 	},
 	async getUserFaves(resolvedUser) {
+		if (resolvedUser === null) {
+			return;
+		}
 		try {
 			const favorites = await SC.get(
 				`/users/${resolvedUser.id}/favorites`,
@@ -50,8 +57,6 @@ const api = {
 
 			return favorites;
 		} catch (err) {
-			console.log(err);
-			console.log(err.message);
 			return err;
 		}
 	},

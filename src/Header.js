@@ -1,5 +1,4 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import StyledHeader from './styled/StyledHeader';
 import User from './User';
 
@@ -11,9 +10,5 @@ const Header = ({user}) => {
 		</StyledHeader>
 	);
 };
-
-const mapStateToProps = state => ({
-	user: state.user,
-});
 
 export default Header;

@@ -15,4 +15,5 @@ export const Button = styled.button`
 	text-transform: uppercase;
 	padding: 1rem 3rem;
 	font-size: 1.3rem;
+	font-family: 'Jost', sans-serif;
 `;

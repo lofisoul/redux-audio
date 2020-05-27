@@ -19,6 +19,9 @@ const DivRight = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 2rem;
+	& button {
+		margin-left: 1rem;
+	}
 `;
 
 const SCForm = ({
@@ -32,9 +35,12 @@ const SCForm = ({
 	const [username, setUsername] = useState('');
 	const handleSubmit = e => {
 		e.preventDefault();
-		fetchUser(username);
 		fetchTracks(username);
 		setUsername('');
+	};
+
+	const handleRefetch = e => {
+		fetchTracks(user.username);
 	};
 
 	const handleReset = e => {
@@ -68,6 +74,9 @@ const SCForm = ({
 				<DivRight>
 					<Button type="button" onClick={handleReset}>
 						Start Over
+					</Button>
+					<Button type="button" onClick={handleRefetch}>
+						Refetch Playlist
 					</Button>
 				</DivRight>
 			)}
