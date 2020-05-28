@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import StyledUserInfo from './styled/StyledUserInfo';
+import {LinkButton} from './styled';
 
 const UserInfo = ({user}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	console.log(isOpen);
 	const toggleDrawer = e => {
-		console.log(!isOpen);
 		setIsOpen(!isOpen);
 	};
 
@@ -23,13 +22,13 @@ const UserInfo = ({user}) => {
 			</div>
 			<div className="user-drawer">
 				<h3>{user.username}</h3>
-				<a
+				<LinkButton
 					href={user.permalink_url}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
 					Follow
-				</a>
+				</LinkButton>
 			</div>
 		</StyledUserInfo>
 	);

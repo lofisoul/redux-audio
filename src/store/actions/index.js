@@ -15,8 +15,10 @@ export const TOGGLE_PLAY_STATUS = 'TOGGLE_PLAY_STATUS';
 export const CLICK_TRACK_PLAY = 'CLICK_TRACK_PLAY';
 export const RESET_PLAYER = 'RESET_PLAYER';
 export const RESET_USER = 'RESET_USER';
-export const HANDLE_ERROR = 'HANDLE_ERROR';
+export const HANDLE_USER_ERROR = 'HANDLE_USER_ERROR';
+export const HANDLE_TRACK_ERROR = 'HANDLE_TRACK_ERROR';
 export const REMOVE_ERROR = 'REMOVE_ERROR';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 export const fetchUser = username => (dispatch, getState, api) => {
 	dispatch(loadUser());
@@ -48,7 +50,7 @@ export const fetchTracks = username => (dispatch, getState, api) => {
 			return user;
 		})
 		.then(user => {
-			api.createPlaylist(user.username).then(playlist => {
+			api.createPlaylist(user).then(playlist => {
 				dispatch(storeTracks(playlist));
 				return playlist;
 			});
@@ -141,12 +143,21 @@ export const resetUser = () => ({
 	type: RESET_USER,
 });
 
-export const handleError = errorMsg => ({
-	type: HANDLE_ERROR,
+export const handleUserFetchError = errorMsg => ({
+	type: HANDLE_USER_ERROR,
+	errorMsg,
+});
+
+export const handleTrackFetchError = errorMsg => ({
+	type: HANDLE_TRACK_ERROR,
 	errorMsg,
 });
 
 export const removeError = index => ({
 	type: REMOVE_ERROR,
 	index,
+});
+
+export const clearErrors = () => ({
+	type: CLEAR_ERRORS,
 });

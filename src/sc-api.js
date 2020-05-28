@@ -1,6 +1,6 @@
 import SC from 'soundcloud';
 import store from './store';
-import {handleError} from './store/actions';
+import {handleUserFetchError, handleTrackFetchError} from './store/actions';
 
 SC.initialize({
 	client_id: process.env.REACT_APP_SC_ID,
@@ -33,27 +33,23 @@ const api = {
 			);
 			return userToResolve;
 		} catch (err) {
-			console.log(err);
 			const errorMsg =
 				err.status === 404
-					? `Whoops! That user doesn't exist!`
+					? `Whoops! That user doesn't exist or you don't have sufficient authority to access those likes! If you think this is wrong, try the username in the URL of your profile page.`
 					: err.message;
-			store.dispatch(handleError(errorMsg));
-			return null;
+			store.dispatch(handleUserFetchError(errorMsg));
+			return;
 		}
 	},
-	async getUserFaves(resolvedUser) {
-		if (resolvedUser === null) {
+	async getUserFaves(userId) {
+		if (userId === null) {
 			return;
 		}
 		try {
-			const favorites = await SC.get(
-				`/users/${resolvedUser.id}/favorites`,
-				{
-					limit: 1000,
-					linked_partitioning: 1,
-				},
-			);
+			const favorites = await SC.get(`/users/${userId}/favorites`, {
+				limit: 1000,
+				linked_partitioning: 1,
+			});
 
 			return favorites;
 		} catch (err) {
@@ -80,7 +76,7 @@ const api = {
 			let randomUser = shuffle(arrayUsersFaves, 1)[0];
 			//ERROR WILL HAPPEN HERE --> error status === 0
 			//this variable will be undefined
-			let userFaves = await this.getUserFaves(randomUser);
+			let userFaves = await this.getUserFaves(randomUser.id);
 			let randomTrack = shuffle(userFaves.collection, 1)[0];
 			//handling same error issue
 			while (randomTrack.id === track.id) {
@@ -113,28 +109,30 @@ const api = {
 		}
 	},
 	async createPlaylist(user) {
+		console.log(user);
 		try {
-			let resolvedUser = await this.fetchUser(user);
-			const userFaves = await this.getUserFaves(resolvedUser);
+			const userFaves = await this.getUserFaves(user.id);
 			const filteredTracks = userFaves.collection.filter(
 				track => track.streamable,
 			);
+			console.log(userFaves.collection);
 			const sortedTracks = shuffle(filteredTracks, playlistSize);
 			//run logic for getting random song based on users that liked 5 sorted tracks
-
+			if (userFaves.collection.length < 10) {
+				const errorMsg = `That user doesn't have enough likes to generate a playlist. Try again with a different username.`;
+				store.dispatch(handleTrackFetchError(errorMsg));
+				return null;
+			}
 			let randomPlaylist = await Promise.all(
 				sortedTracks.map(async (item, index) => {
-					let newItem = await this.generateRandomPlaylist(
-						item,
-						resolvedUser,
-					);
+					let newItem = await this.generateRandomPlaylist(item, user);
 
 					return newItem;
 				}),
 			);
 			let playlist = [].concat.apply([], randomPlaylist);
 			if (playlist.length !== 20) {
-				console.log('YIKES playlist is junked!' + playlist);
+				//console.log('YIKES playlist is junked!' + playlist);
 				// let newFilter = arrayUsersFaves.filter.map(
 				// 	user => user.id !== randomUser.id,
 				// );
@@ -156,5 +154,19 @@ const api = {
 		}
 	},
 };
+
+export const demoUsers = [
+	'soundcloud-shine',
+	'soundcloud-vibrations',
+	'soundcloud-scenes',
+	'soundcloud-hustle',
+	'soundcloud-circuits',
+	'soundcloud-the-peak',
+	'soundcloud-auras',
+	'soundcloud-vs',
+	'diplo',
+	'doandroidsdance',
+	'soulection',
+];
 
 export default api;

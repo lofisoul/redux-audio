@@ -1,4 +1,4 @@
-import {FETCH_TRACKS} from '../actions';
+import {FETCH_TRACKS, HANDLE_TRACK_ERROR} from '../actions';
 
 const playlist = (state = [], action) => {
 	switch (action.type) {

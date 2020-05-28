@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {removeError} from '../store/actions';
 
 const StyledAlert = styled.div`
-	padding: 1rem 2rem;
+	padding: 1rem 0;
 	background: #fff6b7;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
@@ -12,6 +12,9 @@ const StyledAlert = styled.div`
 	& .inner {
 		display: flex;
 		justify-content: flex-start;
+		align-items: start;
+		font-size: 1.3rem;
+		line-height: 1.4;
 		& > div {
 			align-self: center;
 			padding: 0 15px;
@@ -27,12 +30,10 @@ const StyledAlert = styled.div`
 		font-size: 2rem;
 		background: none;
 		border: 0;
-		position: absolute;
-		right: 2rem;
-		top: 0;
 		cursor: pointer;
 		color: #a09b73;
-		padding: 1rem 1.5rem;
+		padding: 0 1.5rem 1.5rem;
+		margin-left: auto;
 	}
 `;
 
@@ -51,8 +52,8 @@ const Alert = ({errorMsg, index, removeError}) => {
 				<div>
 					<p>{errorMsg}</p>
 				</div>
+				<button onClick={clearError}>&times;</button>
 			</div>
-			<button onClick={clearError}>&times;</button>
 		</StyledAlert>
 	);
 };

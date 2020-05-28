@@ -18,6 +18,10 @@ class Player extends Component {
 		this.audio = createRef();
 	}
 
+	componentDidMount = () => {
+		document.addEventListener('keydown', this.onSpacebar, false);
+	};
+
 	componentDidUpdate = () => {
 		if (this.props.currentTrack) {
 			this.togglePlayStatus(this.props.playStatus);
@@ -39,13 +43,24 @@ class Player extends Component {
 
 	playTrack = e => {
 		this.props.setPlayStatus(this.props.playStatus);
+		return false;
+	};
+
+	onSpacebar = e => {
+		if (this.audio.current && e.keyCode === 32) {
+			e.preventDefault();
+			this.props.setPlayStatus(this.props.playStatus);
+			return false;
+		}
 	};
 
 	togglePlayStatus = playStatus => {
-		if (playStatus && this.audio.current) {
+		if (this.audio.current && playStatus) {
 			this.audio.current.play();
-		} else {
+		} else if (this.audio.current && !playStatus) {
 			this.audio.current.pause();
+		} else {
+			return;
 		}
 	};
 

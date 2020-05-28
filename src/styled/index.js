@@ -6,7 +6,7 @@ export const Inner = styled.div`
 	padding: 30px 15px 100px;
 `;
 
-export const Button = styled.button`
+const btnStyles = `
 	border-radius: 0.25rem;
 	background: rgb(14, 49, 125);
 	color: #fff;
@@ -16,4 +16,18 @@ export const Button = styled.button`
 	padding: 1rem 3rem;
 	font-size: 1.3rem;
 	font-family: 'Jost', sans-serif;
+	text-decoration:none;
+	transition:background .2s ease-in;
+	cursor:pointer;
+	&:hover {
+		background:#5cc0fd;
+	}
+`;
+
+export const Button = styled.button`
+	${btnStyles}
+`;
+
+export const LinkButton = styled.a`
+	${btnStyles}
 `;
