@@ -69,18 +69,6 @@ const StyledUserInfo = styled.div`
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-		& a {
-			color: #fff;
-			display: inline-block;
-			background: blue;
-			font-weight: 800;
-			text-transform: uppercase;
-			text-decoration: none;
-			border-radius: 4px;
-			padding: 1rem 2rem;
-			font-size: 1.2rem;
-			width: auto;
-		}
 	}
 `;
 

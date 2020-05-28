@@ -5,13 +5,13 @@ const StyledTrack = styled.div`
 	width: 100%;
 	display: flex;
 	border-radius: 0 6px 6px 0;
-	cursor: pointer;
 	height: 100%;
 	& .track-img {
 		position: relative;
 		background: #2c7873;
 		width: 40px;
 		transition: 0.3s background;
+		cursor: pointer;
 		@media (min-width: 576px) {
 			width: 125px;
 		}

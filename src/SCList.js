@@ -9,7 +9,7 @@ const SCList = ({loadTracks, playlist, user}) => {
 	return (
 		<>
 			{loadTracks && <Loader />}
-			{playlist.length > 0 && !loadTracks && user && (
+			{playlist && playlist.length > 0 && !loadTracks && user && (
 				<StyledList>
 					{playlist.map((item, index) =>
 						item.id !== undefined ? (

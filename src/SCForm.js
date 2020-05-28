@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {fetchUser, fetchTracks, resetUser} from './store/actions';
+import {fetchUser, fetchTracks, resetUser, clearErrors} from './store/actions';
 import styled from 'styled-components';
 import StyledForm from './styled/StyledForm';
 import {Button} from './styled';
+import {demoUsers} from './sc-api';
 
 const FormWrap = styled.div`
 	border-radius: 7px;
@@ -31,6 +32,18 @@ const ResetWrap = styled.div`
 	}
 `;
 
+const StyledAltLink = styled.a`
+	font-style: italic;
+	text-decoration: none;
+	font-size: 1.2rem;
+	display: block;
+	margin: 1rem 0;
+	color: #222;
+	&:hover {
+		color: #0e317d;
+	}
+`;
+
 const SCForm = ({
 	fetchUser,
 	fetchTracks,
@@ -38,6 +51,7 @@ const SCForm = ({
 	resetUser,
 	loadTracks,
 	loadUser,
+	clearErrors,
 }) => {
 	const [username, setUsername] = useState('');
 	const handleSubmit = e => {
@@ -53,6 +67,13 @@ const SCForm = ({
 	const handleReset = e => {
 		e.preventDefault();
 		resetUser();
+		clearErrors();
+	};
+
+	const launchDemo = e => {
+		e.preventDefault();
+		let random = Math.floor(Math.random() * demoUsers.length);
+		fetchTracks(demoUsers[random]);
 	};
 
 	return (
@@ -78,6 +99,10 @@ const SCForm = ({
 							onChange={e => setUsername(e.target.value)}
 						/>
 						<Button type="submit">Launch</Button>
+						<StyledAltLink href="#" onClick={launchDemo}>
+							Don't have soundcloud? Don't worry! Click here to
+							get started.
+						</StyledAltLink>
 					</StyledForm>
 				</FormWrap>
 			)}
@@ -102,6 +127,6 @@ const mapStateToProps = state => {
 		loadUser: state.loadUser,
 	};
 };
-const mapDispatchToProps = {fetchUser, fetchTracks, resetUser};
+const mapDispatchToProps = {fetchUser, fetchTracks, resetUser, clearErrors};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SCForm);
