@@ -158,6 +158,12 @@ const api = {
 export const demoUsers = [
 	'soundcloud-shine',
 	'soundcloud-vibrations',
+	'soundcloud-scenes',
+	'soundcloud-hustle',
+	'soundcloud-circuits',
+	'soundcloud-the-peak',
+	'soundcloud-auras',
+	'soundcloud-vs',
 	'diplo',
 	'doandroidsdance',
 	'soulection',
