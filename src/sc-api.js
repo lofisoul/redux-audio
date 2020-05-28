@@ -109,13 +109,11 @@ const api = {
 		}
 	},
 	async createPlaylist(user) {
-		console.log(user);
 		try {
 			const userFaves = await this.getUserFaves(user.id);
 			const filteredTracks = userFaves.collection.filter(
 				track => track.streamable,
 			);
-			console.log(userFaves.collection);
 			const sortedTracks = shuffle(filteredTracks, playlistSize);
 			//run logic for getting random song based on users that liked 5 sorted tracks
 			if (userFaves.collection.length < 10) {
