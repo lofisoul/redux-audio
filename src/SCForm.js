@@ -15,12 +15,19 @@ const FormWrap = styled.div`
 	margin: 0 auto;
 `;
 
-const DivRight = styled.div`
+const ResetWrap = styled.div`
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-evenly;
 	margin-bottom: 2rem;
 	& button {
-		margin-left: 1rem;
+		padding: 1rem;
+		cursor: pointer;
+	}
+	@media (min-width: 576px) {
+		justify-content: flex-end;
+		& button {
+			margin-left: 1rem;
+		}
 	}
 `;
 
@@ -75,14 +82,14 @@ const SCForm = ({
 				</FormWrap>
 			)}
 			{user && !loadTracks && (
-				<DivRight>
+				<ResetWrap>
 					<Button type="button" onClick={handleReset}>
 						Start Over
 					</Button>
 					<Button type="button" onClick={handleRefetch}>
 						Refetch Playlist
 					</Button>
-				</DivRight>
+				</ResetWrap>
 			)}
 		</>
 	);
