@@ -3,8 +3,9 @@ import StyledUserInfo from './styled/StyledUserInfo';
 
 const UserInfo = ({user}) => {
 	const [isOpen, setIsOpen] = useState(false);
-
+	console.log(isOpen);
 	const toggleDrawer = e => {
+		console.log(!isOpen);
 		setIsOpen(!isOpen);
 	};
 
