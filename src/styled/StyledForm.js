@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const StyledForm = styled.form`
+	max-width: 450px;
+	margin: 0 auto;
 	& input[type='text'] {
 		display: block;
 		width: 100%;
@@ -22,6 +24,12 @@ const StyledForm = styled.form`
 			outline: 0;
 			box-shadow: 0 0 0 0.2rem rgba(14, 49, 125, 0.25);
 		}
+	}
+	& label {
+		font-size: 1.4rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+		display: block;
 	}
 `;
 
