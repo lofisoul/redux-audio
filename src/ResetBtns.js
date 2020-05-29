@@ -22,7 +22,7 @@ const ResetWrap = styled.div`
 
 const ResetBtns = ({user, fetchTracks, resetUser, clearErrors}) => {
 	const handleRefetch = e => {
-		fetchTracks(user.username);
+		fetchTracks(user.permalink);
 	};
 
 	const handleReset = e => {

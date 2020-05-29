@@ -24,7 +24,10 @@ const SCList = ({loadTracks, playlist, user}) => {
 				<StyledList>
 					{playlist.map((item, index) =>
 						item.id !== undefined ? (
-							<li key={item.track.id}>
+							<li
+								key={item.track.id}
+								style={{'--animation-order': index + 1}}
+							>
 								<UserInfo user={item.user} index={index} />
 								<Track track={item.track} index={index} />
 							</li>

@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
+
+const fadeIn = keyframes`
+0% {
+    transform: translateY(30px);
+    opacity:0;
+} 
+100% {
+    opacity:1;
+}
+`;
 
 const StyledList = styled.ul`
 	margin: 0;
@@ -13,6 +23,11 @@ const StyledList = styled.ul`
 		background: #fff;
 		margin-bottom: 2rem;
 		overflow: hidden;
+		animation-name: ${fadeIn};
+		animation-duration: 200ms;
+		animation-delay: calc(var(--animation-order) * 50ms);
+		animation-fill-mode: both;
+		animation-timing-function: ease-in-out;
 	}
 `;
 

@@ -35,7 +35,7 @@ const api = {
 		} catch (err) {
 			const errorMsg =
 				err.status === 404
-					? `Whoops! That user doesn't exist or you don't have sufficient authority to access those likes! If you think this is wrong, try the username in the URL of your profile page.`
+					? `Whoops! That user doesn't exist or you don't have sufficient authority to access those likes! If you think this is wrong, try the username in the URL of your Soundcloud profile page.`
 					: err.message;
 			store.dispatch(handleUserFetchError(errorMsg));
 			return;
@@ -154,6 +154,7 @@ const api = {
 };
 
 export const demoUsers = [
+	'lofisoul',
 	'soundcloud-shine',
 	'soundcloud-vibrations',
 	'soundcloud-scenes',
