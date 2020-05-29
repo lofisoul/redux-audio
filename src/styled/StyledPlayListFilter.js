@@ -21,6 +21,9 @@ const StyledPlayListFilter = styled.form`
 			border: none;
 		}
 	}
+	& label {
+		font-size: 1.4rem;
+	}
 	& label > i {
 		margin-right: 5px;
 	}
