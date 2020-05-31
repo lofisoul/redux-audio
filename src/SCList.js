@@ -12,7 +12,7 @@ const UtilityWrap = styled.div`
 	justify-content: center;
 	@media (min-width: 576px) {
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-end;
 		align-content: center;
 	}
 `;

@@ -36,7 +36,7 @@ const StyledForm = styled.form`
 			color: #444;
 			margin-bottom: 1rem;
 			& > span {
-				background: #ffd801;
+				background: #ffd9aa;
 			}
 		}
 	}

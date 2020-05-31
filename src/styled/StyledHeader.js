@@ -9,6 +9,11 @@ const StyledHeader = styled.header`
 	align-content: center;
 	& h1 {
 		margin: 0;
+		background-image: url(favicon.png);
+		background-repeat: no-repeat;
+		background-size: contain;
+		padding-left: 2rem;
+		background-position: -5px 0;
 	}
 `;
 

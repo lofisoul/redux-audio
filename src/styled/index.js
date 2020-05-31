@@ -8,7 +8,7 @@ export const Inner = styled.div`
 
 const btnStyles = `
 	border-radius: 0.25rem;
-	background: rgb(14, 49, 125);
+	background: #253540;
 	color: #fff;
 	font-weight: 800;
 	border: 0;
@@ -20,7 +20,7 @@ const btnStyles = `
 	transition:background .2s ease-in;
 	cursor:pointer;
 	&:hover {
-		background:#5cc0fd;
+		background:#638ea9;
 	}
 `;
 
