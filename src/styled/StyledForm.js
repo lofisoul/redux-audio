@@ -16,7 +16,7 @@ const StyledForm = styled.form`
 		border-radius: 0.25rem;
 		max-width: 450px;
 		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-		margin-bottom: 0.05rem;
+		margin-bottom: 0.5rem;
 		&::placeholder {
 			color: #cecece;
 			font-size: 1.3rem;
