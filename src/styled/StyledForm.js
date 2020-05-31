@@ -16,7 +16,12 @@ const StyledForm = styled.form`
 		border-radius: 0.25rem;
 		max-width: 450px;
 		transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-		margin-bottom: 1rem;
+		margin-bottom: 0.5rem;
+		&::placeholder {
+			color: #cecece;
+			font-size: 1.3rem;
+			font-style: italic;
+		}
 		&:focus {
 			color: #495057;
 			background-color: #fff;
@@ -24,12 +29,24 @@ const StyledForm = styled.form`
 			outline: 0;
 			box-shadow: 0 0 0 0.2rem rgba(14, 49, 125, 0.25);
 		}
+		& + em {
+			font-size: 0.9rem;
+			display: block;
+			margin-bottom: 1rem;
+			color: #444;
+			margin-bottom: 1rem;
+			& > span {
+				background: #ffd801;
+			}
+		}
 	}
+
 	& label {
 		font-size: 1.4rem;
 		font-weight: 500;
 		margin-bottom: 1rem;
 		display: block;
+		text-align: center;
 	}
 `;
 

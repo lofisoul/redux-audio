@@ -7,7 +7,6 @@ import styled from 'styled-components';
 const ResetWrap = styled.div`
 	display: flex;
 	justify-content: space-evenly;
-	margin-bottom: 2rem;
 	& button {
 		padding: 1rem;
 		cursor: pointer;
@@ -22,7 +21,7 @@ const ResetWrap = styled.div`
 
 const ResetBtns = ({user, fetchTracks, resetUser, clearErrors}) => {
 	const handleRefetch = e => {
-		fetchTracks(user.username);
+		fetchTracks(user.permalink);
 	};
 
 	const handleReset = e => {

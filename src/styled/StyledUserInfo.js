@@ -69,6 +69,10 @@ const StyledUserInfo = styled.div`
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+		& > a {
+			width: ${props => (props.isOpen ? 'auto' : '0')};
+			padding: ${props => (props.isOpen ? '1rem 3rem' : '0')};
+		}
 	}
 `;
 

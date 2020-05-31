@@ -5,26 +5,43 @@ import UserInfo from './UserInfo';
 import StyledList from './styled/StyledList';
 import Loader from './styled/Loader';
 import ResetBtns from './ResetBtns';
-import PlaylistFilter from './PlaylistFilter';
+import styled from 'styled-components';
+
+const UtilityWrap = styled.div`
+	padding-bottom: 2rem;
+	justify-content: center;
+	@media (min-width: 576px) {
+		display: flex;
+		justify-content: space-between;
+		align-content: center;
+	}
+`;
 
 const SCList = ({loadTracks, playlist, user}) => {
-	const [filter, setFilter] = useState(0);
+	const [filter, setFilter] = useState(null);
 	const onChangeHandler = e => {
-		setFilter(e.target.value);
+		let filterState = e.target.value === '0' ? null : e.target.value;
+		setFilter(filterState);
 	};
+	const renderPlaylist = filter
+		? playlist.filter(track => track.type === filter)
+		: playlist;
 	return (
 		<>
 			{loadTracks && <Loader />}
 			{user && !loadTracks && (
-				<div>
+				<UtilityWrap>
 					<ResetBtns />
-				</div>
+				</UtilityWrap>
 			)}
 			{playlist && playlist.length > 0 && !loadTracks && user && (
 				<StyledList>
-					{playlist.map((item, index) =>
+					{renderPlaylist.map((item, index) =>
 						item.id !== undefined ? (
-							<li key={item.track.id}>
+							<li
+								key={item.track.id}
+								style={{'--animation-order': index + 1}}
+							>
 								<UserInfo user={item.user} index={index} />
 								<Track track={item.track} index={index} />
 							</li>
