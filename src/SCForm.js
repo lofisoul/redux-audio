@@ -35,6 +35,7 @@ const StyledAltLink = styled.a`
 
 const Tagline = styled.div`
 	text-align: center;
+	padding-bottom: 2rem;
 	@media (min-width: 576px) {
 		display: grid;
 		grid-template-columns: 1fr auto 1fr;
@@ -130,8 +131,13 @@ const SCForm = ({
 							type="text"
 							name="username"
 							value={username}
+							placeholder={`Soundcloud username`}
 							onChange={e => setUsername(e.target.value)}
 						/>
+						<em>
+							Hint: use from profile url e.g. soundcloud.com/
+							<span>my-username</span>
+						</em>
 						<Button type="submit">Launch</Button>
 						<StyledAltLink href="#" onClick={launchDemo}>
 							Don't have soundcloud? Don't worry! Click here to

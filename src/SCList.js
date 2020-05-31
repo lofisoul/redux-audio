@@ -5,7 +5,6 @@ import UserInfo from './UserInfo';
 import StyledList from './styled/StyledList';
 import Loader from './styled/Loader';
 import ResetBtns from './ResetBtns';
-import PlaylistFilter from './PlaylistFilter';
 import styled from 'styled-components';
 
 const UtilityWrap = styled.div`
@@ -32,10 +31,6 @@ const SCList = ({loadTracks, playlist, user}) => {
 			{loadTracks && <Loader />}
 			{user && !loadTracks && (
 				<UtilityWrap>
-					<PlaylistFilter
-						onChangeHandler={onChangeHandler}
-						filter={filter}
-					/>
 					<ResetBtns />
 				</UtilityWrap>
 			)}
