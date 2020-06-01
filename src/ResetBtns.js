@@ -7,6 +7,7 @@ import styled from 'styled-components';
 const ResetWrap = styled.div`
 	display: flex;
 	justify-content: space-evenly;
+	margin-bottom: 2rem;
 	& button {
 		padding: 1rem;
 		cursor: pointer;

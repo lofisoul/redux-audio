@@ -16,6 +16,7 @@ const UserWrap = styled.a`
 	border-radius: 40px;
 	color: #222;
 	text-decoration: none;
+	align-self: center;
 	& > span {
 		display: none;
 	}
@@ -33,6 +34,7 @@ const DummyUser = styled.div`
 	background: #b2e6d4;
 	padding: 5px;
 	border-radius: 40px;
+	align-self: center;
 	@media (min-width: 576px) {
 		width: 100px;
 	}

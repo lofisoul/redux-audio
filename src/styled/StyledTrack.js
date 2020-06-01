@@ -8,7 +8,7 @@ const StyledTrack = styled.div`
 	height: 100%;
 	& .track-img {
 		position: relative;
-		background: #2c7873;
+		background: #93c3c3;
 		width: 40px;
 		transition: 0.3s background;
 		cursor: pointer;
@@ -40,7 +40,6 @@ const StyledTrack = styled.div`
 		}
 	}
 	&:hover .track-img {
-		background: #6fb98f;
 		@media (min-width: 576px) {
 			& .fas {
 				opacity: 1;
@@ -54,7 +53,7 @@ const StyledTrack = styled.div`
 			width: calc(100% - 118px);
 		}
 		& label {
-			background: #222;
+			background: #253540;
 			color: #fff;
 			display: inline-block;
 			width: auto;

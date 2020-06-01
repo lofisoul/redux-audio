@@ -21,17 +21,13 @@ const StyledUserInfo = styled.div`
 		z-index: 2;
 		cursor: pointer;
 		transition: 0.3s;
-		background: #082520;
+		background: #253540;
 		border-radius: ${props => (props.isOpen ? '0px' : '6px 0 0 6px')};
 		padding: 10px;
-		&:hover {
-			background: #0d3e35;
-		}
 		& img {
 			width: 30px;
 			height: 30px;
 			border-radius: 50%;
-			border: 3px solid #092b25;
 			@media (min-width: 576px) {
 				width: 60px;
 				height: 60px;

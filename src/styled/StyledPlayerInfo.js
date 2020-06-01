@@ -24,7 +24,7 @@ const StyledPlayerInfo = styled.div`
 		padding-left: 8px;
 		& label {
 			display: inline-block;
-			background: #222;
+			background: #253540;
 			color: #fff;
 			display: inline-block;
 			width: auto;
