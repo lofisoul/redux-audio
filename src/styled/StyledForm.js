@@ -7,7 +7,7 @@ const StyledForm = styled.form`
 		display: block;
 		width: 100%;
 		padding: 0.375rem 0.75rem;
-		font-size: 1.3rem;
+		font-size: 1.6rem;
 		line-height: 1.5;
 		color: #495057;
 		background-color: #fff;
@@ -19,7 +19,7 @@ const StyledForm = styled.form`
 		margin-bottom: 0.5rem;
 		&::placeholder {
 			color: #cecece;
-			font-size: 1.3rem;
+			font-size: 1.6rem;
 			font-style: italic;
 		}
 		&:focus {
@@ -37,6 +37,9 @@ const StyledForm = styled.form`
 			margin-bottom: 1rem;
 			& > span {
 				background: #ffd9aa;
+			}
+			@media (min-width: 450px) {
+				font-size: 1rem;
 			}
 		}
 	}
