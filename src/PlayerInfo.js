@@ -20,7 +20,7 @@ const PlayerInfo = ({currentTrack}) => {
 			</div>
 			<div className="track-info">
 				<label>{currentTrack.user.username}</label>
-				{currentTrack.title}
+				<div>{currentTrack.title}</div>
 			</div>
 		</StyledPlayerInfo>
 	);
