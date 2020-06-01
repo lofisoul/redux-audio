@@ -11,11 +11,11 @@ const spinner = keyframes`
 `;
 
 const colors = keyframes`
-	0% {color:#fff}
-	25% {color:#ffd800}
-	50% {color: #aadaf7}
-	75% {color:#aaf7c6}
-	100% {color:#fff}
+	0% {color:#FFEFA0}
+	20% {color:#FFD9AA}
+	50% {color: #FFA5AB}
+	80% {color:#FFD9AA}
+	100% {color:#FFEFA0}
 `;
 
 const SpinDiv = styled.div`
@@ -23,7 +23,7 @@ const SpinDiv = styled.div`
 	font-size: 4rem;
 	& > i {
 		animation: ${spinner} 2s linear infinite,
-			${colors} 4s ease-in-out infinite;
+			${colors} 5s ease-in-out infinite;
 	}
 `;
 
