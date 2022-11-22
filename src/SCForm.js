@@ -57,6 +57,8 @@ const SCForm = ({
 		fetchTracks(demoUsers[random]);
 	};
 
+	const handleChange = e => setUsername(e.target.value)
+
 	return (
 		<>
 			{!user && !loadUser && (
@@ -89,7 +91,7 @@ const SCForm = ({
 							name="username"
 							value={username}
 							placeholder={`Soundcloud username`}
-							onChange={e => setUsername(e.target.value)}
+							onChange={handleChange}
 						/>
 						<em>
 							Hint: use from profile url e.g. soundcloud.com/
