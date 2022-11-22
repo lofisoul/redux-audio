@@ -1,10 +1,5 @@
-import SC from 'soundcloud';
 import store from './store';
 import {handleUserFetchError, handleTrackFetchError} from './store/actions';
-
-SC.initialize({
-	client_id: process.env.REACT_APP_SC_ID,
-});
 
 export const shuffle = (arr, n) => {
 	let currentIndex = arr.length,
@@ -22,15 +17,23 @@ export const shuffle = (arr, n) => {
 	return arr.slice(0, n);
 };
 
-const playlistSize = 10;
+const playlistSize = 5;
 
 const api = {
 	//function to resolve soundcloud user
-	async fetchUser(user) {
+	async fetchUser(user, authToken) {
 		try {
-			const userToResolve = await SC.resolve(
-				`https://soundcloud.com/${user}`,
-			);
+			const userToResolve = await fetch(
+				`https://api.soundcloud.com/resolve?url=https://soundcloud.com/${user}`,
+				{
+					headers: {
+						Accept: '*/*',
+						Authorization: `OAuth ${authToken}`,
+					},
+				},
+			)
+				.then(res => res.json())
+				.then(data => data);
 			return userToResolve;
 		} catch (err) {
 			const errorMsg =
@@ -41,32 +44,49 @@ const api = {
 			return;
 		}
 	},
-	async getUserFaves(userId) {
+	async getUserFaves(userId, authToken) {
 		if (userId === null) {
 			return;
 		}
 		try {
-			const favorites = await SC.get(`/users/${userId}/favorites`, {
-				limit: 1000,
-				linked_partitioning: 1,
-			});
-
-			return favorites;
+			return await fetch(
+				`https://api.soundcloud.com/users/${userId}/likes/tracks`,
+				{
+					headers: {
+						Accept: '*/*',
+						Authorization: `OAuth ${authToken}`,
+					},
+					limit: 1000,
+					linked_partitioning: 1,
+				},
+			)
+				.then(res => res.json())
+				.then(data => {
+					return data;
+				});
+			// console.log('FAVORITES ' + favorites)
+			// console.log('FAVORITES ' + JSON.stringify(favorites))
+			// return favorites;
 		} catch (err) {
 			return err;
 		}
 	},
-	async generateRandomPlaylist(track, sessionUser) {
+	async generateRandomPlaylist(track, sessionUser, authToken) {
 		try {
-			const usersWhoLiked = await SC.get(
-				`/tracks/${track.id}/favoriters`,
+			const usersWhoLiked = await fetch(
+				`https://api.soundcloud.com/tracks/${track.id}/favoriters`,
 				{
+					headers: {
+						Accept: '*/*',
+						Authorization: `OAuth ${authToken}`,
+					},
 					limit: 1000,
 					linked_partitioning: 1,
 				},
-			);
-
-			let userArr = usersWhoLiked.collection;
+			)
+				.then(res => res.json())
+				.then(data => data);
+			let userArr = usersWhoLiked;
 			const arrayUsersFaves = userArr.filter(
 				user =>
 					user.public_favorites_count > 1 &&
@@ -76,11 +96,14 @@ const api = {
 			let randomUser = shuffle(arrayUsersFaves, 1)[0];
 			//ERROR WILL HAPPEN HERE --> error status === 0
 			//this variable will be undefined
-			let userFaves = await this.getUserFaves(randomUser.id);
-			let randomTrack = shuffle(userFaves.collection, 1)[0];
+			let userFaves = await this.getUserFaves(
+				randomUser.id,
+				localStorage.accessToken,
+			);
+			let randomTrack = shuffle(userFaves, 1)[0];
 			//handling same error issue
 			while (randomTrack.id === track.id) {
-				randomTrack = shuffle(userFaves.collection, 1)[0];
+				randomTrack = shuffle(userFaves, 1)[0];
 			}
 			//handling issue of non-streamable track
 			while (randomTrack.streamable === false) {
@@ -108,22 +131,24 @@ const api = {
 			return err;
 		}
 	},
-	async createPlaylist(user) {
+	async createPlaylist(user, authToken) {
 		try {
-			const userFaves = await this.getUserFaves(user.id);
-			const filteredTracks = userFaves.collection.filter(
-				track => track.streamable,
-			);
+			const userFaves = await this.getUserFaves(user.id, authToken);
+			const filteredTracks = userFaves.filter(track => track.streamable);
 			const sortedTracks = shuffle(filteredTracks, playlistSize);
 			//run logic for getting random song based on users that liked 5 sorted tracks
-			if (userFaves.collection.length < 10) {
+			if (userFaves.length < 10) {
 				const errorMsg = `That user doesn't have enough likes to generate a playlist. Try again with a different username.`;
 				store.dispatch(handleTrackFetchError(errorMsg));
 				return null;
 			}
 			let randomPlaylist = await Promise.all(
 				sortedTracks.map(async (item, index) => {
-					let newItem = await this.generateRandomPlaylist(item, user);
+					let newItem = await this.generateRandomPlaylist(
+						item,
+						user,
+						authToken,
+					);
 
 					return newItem;
 				}),
@@ -143,9 +168,16 @@ const api = {
 			return err;
 		}
 	},
-	async fetchTrack(id) {
+	async fetchTrack(id, authToken) {
 		try {
-			let track = await SC.get(`/tracks/${id}`);
+			let track = await fetch(`https://api.soundcloud.com/tracks/${id}`, {
+				headers: {
+					Accept: '*/*',
+					Authorization: `OAuth ${authToken}`,
+				},
+			})
+				.then(res => res.json())
+				.then(data => data);
 			return track;
 		} catch (err) {
 			return err;

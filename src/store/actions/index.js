@@ -22,7 +22,7 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 export const fetchUser = username => (dispatch, getState, api) => {
 	dispatch(loadUser());
-	api.fetchUser(username)
+	api.fetchUser(username, localStorage.accessToken)
 		.then(user => {
 			dispatch(storeUser(user));
 		})
@@ -44,16 +44,18 @@ const storeUser = user => ({
 export const fetchTracks = username => (dispatch, getState, api) => {
 	dispatch(loadUser());
 	dispatch(loadTracks());
-	api.fetchUser(username)
+	api.fetchUser(username, localStorage.accessToken)
 		.then(user => {
 			dispatch(storeUser(user));
 			return user;
 		})
 		.then(user => {
-			api.createPlaylist(user).then(playlist => {
-				dispatch(storeTracks(playlist));
-				return playlist;
-			});
+			api.createPlaylist(user, localStorage.accessToken).then(
+				playlist => {
+					dispatch(storeTracks(playlist));
+					return playlist;
+				},
+			);
 		})
 		.catch(err => {
 			console.log(err);
