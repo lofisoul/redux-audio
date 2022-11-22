@@ -19,6 +19,8 @@ const UtilityWrap = styled.div`
 
 const SCList = ({loadTracks, playlist, user}) => {
 	const [filter, setFilter] = useState(null);
+
+	// eslint-disable-next-line
 	const onChangeHandler = e => {
 		let filterState = e.target.value === '0' ? null : e.target.value;
 		setFilter(filterState);
