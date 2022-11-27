@@ -30,8 +30,9 @@ export function useSoundcloud() {
 
 		if (localStorage.accessToken) {
 			const now = new Date();
-
-			if (localStorage.expires < now) {
+			const expiredDate = Date.parse(localStorage.expires);
+			const expired = new Date(expiredDate);
+			if (expired < now) {
 				fetch(`${refreshURL}${localStorage.refreshToken}`, {
 					headers: {
 						Accept: 'application/json; charset=utf-8',
