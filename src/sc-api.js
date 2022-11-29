@@ -101,6 +101,7 @@ const api = {
 				localStorage.accessToken,
 			);
 			let randomTrack = shuffle(userFaves, 1)[0];
+
 			//handling same error issue
 			while (randomTrack.id === track.id) {
 				randomTrack = shuffle(userFaves, 1)[0];
@@ -110,17 +111,39 @@ const api = {
 				randomTrack = shuffle(userFaves.collection, 1)[0];
 			}
 
+			//get audioSrc
+			const trackAudioSrc = await fetch(`${track.stream_url}s`, {
+				headers: {
+					Accept: 'application/json; charset=utf-8',
+					Authorization: `OAuth ${localStorage.accessToken}`,
+				},
+			})
+				.then(res => res.json())
+				.then(data => data.http_mp3_128_url);
+
+			const randomTrackAudioSrc = await fetch(
+				`${randomTrack.stream_url}s`,
+				{
+					headers: {
+						Accept: 'application/json; charset=utf-8',
+						Authorization: `OAuth ${localStorage.accessToken}`,
+					},
+				},
+			)
+				.then(res => res.json())
+				.then(data => data.http_mp3_128_url);
+
 			let randomArr = [];
 			const userFave = {
 				user: sessionUser,
-				track: track,
+				track: {audioSrc: trackAudioSrc, ...track},
 				type: 'user',
 				id: track.id,
 				partnerId: randomTrack.id,
 			};
 			const referral = {
 				user: randomUser,
-				track: randomTrack,
+				track: {audioSrc: randomTrackAudioSrc, ...randomTrack},
 				type: 'referral',
 				id: randomTrack.id,
 				partnerId: track.id,

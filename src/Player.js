@@ -216,7 +216,7 @@ class Player extends Component {
 							<PlayerInfo />
 						</div>
 						<audio
-							src={`${this.props.currentTrack.stream_url}?client_id=${process.env.REACT_APP_SC_ID}`}
+							src={this.props.currentTrack.audioSrc}
 							ref={this.audio}
 						/>
 					</>
