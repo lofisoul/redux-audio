@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import StyledForm from './styled/StyledForm';
 import Tagline from './styled/Tagline.js';
 import {Button} from './styled';
-import {demoUsers} from './sc-api';
+import {demoUsers, playlistSize} from './sc-api';
 
 const FormWrap = styled.div`
 	border-radius: 7px;
@@ -57,7 +57,7 @@ const SCForm = ({
 		fetchTracks(demoUsers[random]);
 	};
 
-	const handleChange = e => setUsername(e.target.value)
+	const handleChange = e => setUsername(e.target.value);
 
 	return (
 		<>
@@ -79,8 +79,11 @@ const SCForm = ({
 						<div>
 							<i className="fas fa-headphones-alt"></i>
 							<h3>Explore new sounds</h3>
-							<p>10 likes from you.</p>
-							<p>10 likes from the soundcloud community.</p>
+							<p>{playlistSize} likes from you.</p>
+							<p>
+								{playlistSize} likes from the soundcloud
+								community.
+							</p>
 						</div>
 					</Tagline>
 

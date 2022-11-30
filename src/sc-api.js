@@ -17,7 +17,7 @@ export const shuffle = (arr, n) => {
 	return arr.slice(0, n);
 };
 
-const playlistSize = 5;
+export const playlistSize = 5;
 
 const api = {
 	//function to resolve soundcloud user

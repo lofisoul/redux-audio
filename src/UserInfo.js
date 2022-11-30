@@ -14,10 +14,7 @@ const UserInfo = ({user}) => {
 				{user.avatar_url ? (
 					<img src={user.avatar_url} alt={user.username} />
 				) : (
-					<img
-						src="https://gradientjoy.com/200?id=229"
-						alt={user.username}
-					/>
+					<img src="/pattern.svg" alt={user.username} />
 				)}
 			</div>
 			<div className="user-drawer">

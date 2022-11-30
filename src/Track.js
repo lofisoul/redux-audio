@@ -39,10 +39,7 @@ const Track = ({
 				{track.artwork_url ? (
 					<img src={track.artwork_url} alt={track.title} />
 				) : (
-					<img
-						src="https://gradientjoy.com/200?id=229"
-						alt={track.title}
-					/>
+					<img src="/pattern.svg" alt={track.title} />
 				)}
 				{playStatus && currentIndex === index ? (
 					<i className="fas fa-pause"></i>
