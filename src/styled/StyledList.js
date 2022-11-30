@@ -37,9 +37,13 @@ const StyledList = styled.ul`
 				background: #ffdaab;
 			}
 
-			.track-img .fas {
+			.track-img {
+				background: #FFA5AB;
+
+			.fas {
 				opacity: 1;
 			}
+		}
 	}
 `;
 
