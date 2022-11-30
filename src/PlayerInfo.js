@@ -12,10 +12,7 @@ const PlayerInfo = ({currentTrack}) => {
 						alt={currentTrack.title}
 					/>
 				) : (
-					<img
-						src="https://gradientjoy.com/200?id=229"
-						alt={currentTrack.title}
-					/>
+					<img src="/pattern.svg" alt={currentTrack.title} />
 				)}
 			</div>
 			<div className="track-info">

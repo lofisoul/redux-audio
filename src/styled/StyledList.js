@@ -28,6 +28,18 @@ const StyledList = styled.ul`
 		animation-delay: calc(var(--animation-order) * 50ms);
 		animation-fill-mode: both;
 		animation-timing-function: ease-in-out;
+		transition: 0.3s;
+
+		&.active {
+			outline: 3px solid #ffdaab;
+			
+			.user-img {
+				background: #ffdaab;
+			}
+
+			.track-img .fas {
+				opacity: 1;
+			}
 	}
 `;
 

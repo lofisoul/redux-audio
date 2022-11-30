@@ -64,13 +64,12 @@ const StyledTimer = styled.div`
 		border: 0;
 		padding: 0;
 		background-color: #47c19c;
-		height: 8px;
+		height: 12px;
 		margin-left: -4px;
-		width: 8px;
+		width: 12px;
 		border-radius: 100%;
 		box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.3);
 		z-index: 3;
-		opacity: 0;
 		@media (min-width: 768px) {
 			opacity: 1;
 		}

@@ -17,7 +17,7 @@ const UtilityWrap = styled.div`
 	}
 `;
 
-const SCList = ({loadTracks, playlist, user}) => {
+const SCList = ({loadTracks, playlist, user, currentTrack, playStatus}) => {
 	const [filter, setFilter] = useState(null);
 
 	// eslint-disable-next-line
@@ -41,6 +41,12 @@ const SCList = ({loadTracks, playlist, user}) => {
 					{renderPlaylist.map((item, index) =>
 						item.id !== undefined ? (
 							<li
+								className={
+									playStatus &&
+									currentTrack.id === item.track.id
+										? 'active'
+										: ''
+								}
 								key={item.track.id}
 								style={{'--animation-order': index + 1}}
 							>
@@ -61,6 +67,8 @@ const mapStateToProps = state => ({
 	loadTracks: state.loadTracks,
 	playlist: state.playlist,
 	user: state.user,
+	currentTrack: state.currentTrack,
+	playStatus: state.playStatus,
 });
 
 export default connect(mapStateToProps)(SCList);
