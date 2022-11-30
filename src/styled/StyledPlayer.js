@@ -14,7 +14,7 @@ const StyledPlayer = styled.div`
 		margin: 0 auto;
 		display: flex;
 		align-items: center;
-		padding: 5px;
+		padding: 5px 5px calc(5px + env(safe-area-inset-bottom));
 		height: 100%;
 		border-top: 3px solid #afe3d3;
 		& > div {

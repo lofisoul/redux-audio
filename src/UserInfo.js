@@ -4,18 +4,24 @@ import {LinkButton} from './styled';
 
 const UserInfo = ({user}) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const defaultUserImage =
+		'https://a1.sndcdn.com/images/default_avatar_large.png';
 	const toggleDrawer = e => {
 		setIsOpen(!isOpen);
+	};
+
+	const handleImageError = e => {
+		e.target.src = defaultUserImage;
 	};
 
 	return (
 		<StyledUserInfo isOpen={isOpen}>
 			<div className="user-img" onClick={toggleDrawer}>
-				{user.avatar_url ? (
-					<img src={user.avatar_url} alt={user.username} />
-				) : (
-					<img src="/pattern.svg" alt={user.username} />
-				)}
+				<img
+					src={user.avatar_url ? user.avatar_url : '/pattern.svg'}
+					alt={user.username}
+					onError={handleImageError}
+				/>
 			</div>
 			<div className="user-drawer">
 				<h3>{user.username}</h3>

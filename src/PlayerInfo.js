@@ -6,14 +6,14 @@ const PlayerInfo = ({currentTrack}) => {
 	return (
 		<StyledPlayerInfo>
 			<div className="track-img">
-				{currentTrack.artwork_url ? (
-					<img
-						src={currentTrack.artwork_url}
-						alt={currentTrack.title}
-					/>
-				) : (
-					<img src="/pattern.svg" alt={currentTrack.title} />
-				)}
+				<img
+					src={
+						currentTrack.artwork_url
+							? currentTrack.artwork_url
+							: '/pattern.svg'
+					}
+					alt={currentTrack.title}
+				/>
 			</div>
 			<div className="track-info">
 				<label>{currentTrack.user.username}</label>

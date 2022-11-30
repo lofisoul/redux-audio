@@ -36,16 +36,17 @@ const Track = ({
 	return (
 		<StyledTrack data-id={track.id} index={index}>
 			<div className="track-img" onClick={clickPlay}>
-				{track.artwork_url ? (
-					<img src={track.artwork_url} alt={track.title} />
-				) : (
-					<img src="/pattern.svg" alt={track.title} />
-				)}
-				{playStatus && currentIndex === index ? (
-					<i className="fas fa-pause"></i>
-				) : (
-					<i className="fas fa-play"></i>
-				)}
+				<img
+					src={track.artwork_url ? track.artwork_url : '/pattern.svg'}
+					alt={track.title}
+				/>
+				<i
+					className={`fas ${
+						playStatus && currentIndex === index
+							? 'fa-pause'
+							: 'fa-play'
+					}`}
+				></i>
 			</div>
 			<div className="track-info">
 				<label>{track.user.username}</label>
